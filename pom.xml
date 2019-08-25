@@ -8,13 +8,13 @@
 	<!-- ==================== -->
 
 	<scm>
-		<url>https://github.com/javolution/javolution</url>
-		<connection>scm:git:git://github.com/javolution/javolution</connection>
-		<developerConnection>scm:git:git@github.com:javolution/javolution.git</developerConnection>
+		<url>https://github.com/tommyettinger/jaunt</url>
+		<connection>scm:git:git://github.com/tommyettinger/jaunt</connection>
+		<developerConnection>scm:git:git@github.com:tommyettinger/jaunt.git</developerConnection>
 	</scm>
 
 	<issueManagement>
-		<url>https://github.com/javolution/javolution/issues</url>
+		<url>https://github.com/tommyettinger/jaunt/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
@@ -22,18 +22,18 @@
 	<!-- Project description (including license) -->
 	<!-- ======================================= -->
 
-	<groupId>org.javolution</groupId>
-	<artifactId>javolution</artifactId>
-	<version>7.0.0-SNAPSHOT</version>
+	<groupId>com.github.tommyettinger</groupId>
+	<artifactId>jaunt</artifactId>
+	<version>7.1.0-SNAPSHOT</version>
 
 	<packaging>bundle</packaging>
-	<name>Javolution</name>
-	<url>http://javolution.org</url>
+	<name>jaunt</name>
+	<url>https://github.com/tommyettinger/jaunt</url>
 	<description>Java Library for Real-Time and High-Performance Applications.</description>
 	<licenses>
 		<license>
 			<name>MIT License</name>
-			<url>https://github.com/javolution/javolution/blob/master/LICENSE</url>
+			<url>https://raw.githubusercontent.com/tommyettinger/jaunt/master/LICENSE</url>
 		</license>
 	</licenses>
 
@@ -42,11 +42,11 @@
 	<!-- ==================== -->
 
 	<dependencies>
-		<dependency> <!-- To support Javolution C++ build (MSVC2015 environment factory) -->
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>native-maven-plugin</artifactId>
-			<version>1.0-alpha-8</version>
-		</dependency>
+<!--		<dependency> &lt;!&ndash; To support Javolution C++ build (MSVC2015 environment factory) &ndash;&gt;-->
+<!--			<groupId>org.codehaus.mojo</groupId>-->
+<!--			<artifactId>native-maven-plugin</artifactId>-->
+<!--			<version>1.0-alpha-8</version>-->
+<!--		</dependency>-->
 		<dependency> <!-- OSGI Core Library -->
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
@@ -90,7 +90,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
+				<version>3.8.0</version>
 				<configuration>
 				    <source>1.8</source>
 				    <target>1.8</target>
@@ -142,7 +142,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
+				<version>3.0.1</version>
 				<configuration>
 					<doclet>ch.raffael.doclets.pegdown.PegdownDoclet</doclet>
 					<docletArtifact>
@@ -153,6 +153,7 @@
 					<excludePackageNames>javax.*,*.internal</excludePackageNames>
 					<docfilessubdirs>true</docfilessubdirs>
 					<failOnError>false</failOnError>
+					<doclint>none</doclint>
 				</configuration>
 				<executions>
 					<execution>

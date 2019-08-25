@@ -8,16 +8,14 @@
  */
 package org.javolution.context.internal;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import javax.realtime.RealtimeThread;
-
 import org.javolution.context.AbstractContext;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A worker thread executing in a concurrent context.
  */
-public class ConcurrentThreadImpl extends RealtimeThread { 
+public class ConcurrentThreadImpl extends Thread { 
 
     private static int count;
     private ConcurrentContextImpl context;

@@ -8,13 +8,11 @@
  */
 package org.javolution.util.internal;
 
-import static org.javolution.lang.MathLib.max;
-import static org.javolution.lang.MathLib.min;
-import static org.javolution.lang.MathLib.unsignedLessThan;
-
 import org.javolution.lang.Immutable;
 import org.javolution.util.FractalArray;
 import org.javolution.util.function.Predicate;
+
+import static org.javolution.lang.MathLib.*;
 
 /**
  * The fractal array default implementation (key class in org.javolution.util
@@ -501,9 +499,9 @@ public abstract class FractalArrayImpl<E> extends FractalArray<E> {
 					return shift(firstIndex(), to, null).set(from, inserted);
 				if (isOverflow(to))
 					return set(lastIndex() + 1, get(lastIndex())).shift(from, lastIndex(), inserted);
-
-				if ((to - from) >>> innerIndexSize > ARRAY_LENGTH / 2) // Optimization
-					return shift(lastIndex(), to, get(firstIndex())).shiftRight().shift(from, firstIndex(), inserted);
+//// https://github.com/javolution/javolution/issues/15#issuecomment-431913767
+//				if ((to - from) >>> innerIndexSize > ARRAY_LENGTH / 2) // Optimization
+//					return shift(lastIndex(), to, get(firstIndex())).shiftRight().shift(from, firstIndex(), inserted);
 				int iFrom = arrayIndex(from);
 				int iTo = arrayIndex(to);
 				for (int i = iFrom;; i = ++i & MASK) {
@@ -534,8 +532,9 @@ public abstract class FractalArrayImpl<E> extends FractalArray<E> {
 				if (isOverflow(from))
 					return shift(lastIndex(), to, null).set(from, inserted);
 
-				if ((from - to) >>> innerIndexSize > ARRAY_LENGTH / 2) // Optimization
-					return shift(firstIndex(), to, get(lastIndex())).shiftLeft().shift(from, lastIndex(), inserted);
+//// https://github.com/javolution/javolution/issues/15#issuecomment-431913767
+//				if ((from - to) >>> innerIndexSize > ARRAY_LENGTH / 2) // Optimization
+//					return shift(firstIndex(), to, get(lastIndex())).shiftLeft().shift(from, lastIndex(), inserted);
 
 				int iFrom = arrayIndex(from);
 				int iTo = arrayIndex(to);
