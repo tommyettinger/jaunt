@@ -8,8 +8,9 @@
  */
 package org.javolution.text;
 
-import java.io.Serializable;
 import org.javolution.lang.MathLib;
+
+import java.io.Serializable;
 
 /**
  * <p> An {@link Appendable} text whose capacity expands gently without incurring expensive 
@@ -18,9 +19,6 @@ import org.javolution.lang.MathLib;
  * <p> This class is not intended for large documents manipulations which should be performed with the {@link Text}
  *     class directly (<code>O(Log(n))</code> {@link Text#insert insertion} and 
  *     {@link Text#delete deletion} capabilities).</p>
- *     
- * <p> The textual format of any appended object is retrieved 
- *     from the current {@link TextContext}.</p>
  *     
  * @author  <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle</a>
  * @version 5.3, January 20, 2008
@@ -214,9 +212,7 @@ public class TextBuilder implements Appendable, CharSequence, Serializable {
      */
     public final TextBuilder append(Object obj) {
         if (obj == null) return append("null");
-        TextFormat<Object> textFormat = TextContext.getFormat(obj.getClass());
-        if (textFormat == null) return append(obj.toString());
-        return textFormat.format(obj, this);
+        return append(obj.toString());
     }
 
     /**

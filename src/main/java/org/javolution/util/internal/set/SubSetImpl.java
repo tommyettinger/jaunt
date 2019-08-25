@@ -47,7 +47,7 @@ public final class SubSetImpl<E> extends AbstractSet<E> {
         return inner.add(element, allowDuplicate);
     }
 
-    @Parallel
+    
     @Override
     public void clear() {
         removeIf(Predicate.TRUE);
@@ -111,7 +111,7 @@ public final class SubSetImpl<E> extends AbstractSet<E> {
             }});
     }       
 
-    @Parallel
+    
     @Override
     public int size() {
         int count = 0;

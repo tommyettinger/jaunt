@@ -8,17 +8,15 @@
  */
 package org.javolution.util;
 
-import static org.javolution.annotations.Realtime.Limit.CONSTANT;
-import static org.javolution.annotations.Realtime.Limit.LINEAR;
-import static org.javolution.annotations.Realtime.Limit.LOG_N;
-
-import java.io.Serializable;
-import java.util.NoSuchElementException;
-
 import org.javolution.annotations.Nullable;
 import org.javolution.annotations.Realtime;
 import org.javolution.util.function.Predicate;
 import org.javolution.util.internal.FractalArrayImpl;
+
+import java.io.Serializable;
+import java.util.NoSuchElementException;
+
+import static org.javolution.annotations.Realtime.Limit.*;
 
 /**
  * A [fractal-based] array supporting 64-bits indexing, fast rotation and minimal memory footprint (they can 
@@ -113,7 +111,7 @@ public abstract class FractalArray<E> implements Cloneable, Serializable, Iterab
     public abstract FractalArray<E> clear(long index);
 
     /**
-     * Sets the element at the specified index (unsigned 64-bits), equivalent to {@link clear}
+     * Sets the element at the specified index (unsigned 64-bits), equivalent to {@link #clear(long)}
      * if the element is {@code null}.
      * 
      * @param index the unsigned 64-bits index of the value to be set.

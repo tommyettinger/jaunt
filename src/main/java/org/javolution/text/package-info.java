@@ -8,7 +8,7 @@
     <p> With Javolution 4.1, <code>double</code> formatting/parsing is lossless 
         and functionally the same as with the standard library. Parsing a character 
         sequence will always result in the same number whether it is performed with
-        {@link javolution.text.TypeFormat TypeFormat} or using <code>Double.parseDouble(String))</code>.
+        {@link org.javolution.text.TypeFormat TypeFormat} or using <code>Double.parseDouble(String))</code>.
         When formatting a <code>double</code> number, the number of digits output 
         is adjustable. The default (if the number of digits is unspecified) is <code>17</code> 
         or <code>16</code> when the the 16 digits representation  can be parsed back to
@@ -25,7 +25,7 @@ to conserve memory.</b>
     <p> It all depends of the size of the text to append (the actual size of the
          document being appended has almost no impact in both cases).</p>
     <p> If the text being appended is large (or arbitrarily large) then using 
-        {@link javolution.text.Text Text} is preferable.
+        {@link org.javolution.text.Text Text} is preferable.
 {@code
 class FastCollection<T> {
      public final Text toText() {

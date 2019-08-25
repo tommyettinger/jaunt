@@ -21,16 +21,16 @@ import java.lang.annotation.Target;
  * ```java
  * public abstract class FastCollection<E> {
  * 
- *    ​@Parallel
+ *    ​
  *    public void forEach(Consumer<? super E> consumer) { ... }
  *    
- *    ​@Parallel
+ *    ​
  *    public boolean removeIf(Predicate<? super E> filter) { ... }
  *    
- *    ​@Parallel
+ *    ​
  *    public E reduce(BinaryOperator<E> operator) { ... }
  *    
- *    ​@Parallel
+ *    ​
  *    public boolean contains(Object obj) { ... }
  * }
  * ```

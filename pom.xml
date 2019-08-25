@@ -26,7 +26,7 @@
 	<artifactId>jaunt</artifactId>
 	<version>7.1.0-SNAPSHOT</version>
 
-	<packaging>bundle</packaging>
+	<packaging>jar</packaging>
 	<name>jaunt</name>
 	<url>https://github.com/tommyettinger/jaunt</url>
 	<description>Java Library for Real-Time and High-Performance Applications.</description>
@@ -97,26 +97,6 @@
 				</configuration>
 			</plugin>
 			
-			<!-- ============== -->
-			<!-- OSGi Packaging -->
-			<!-- ============== -->
-
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.2.0</version>
-				<extensions>true</extensions>
-				<configuration>
-					<instructions>
-						<Export-Package>!org.javolution.*.internal.*,org.javolution.*,org.osgi.service.log</Export-Package>
-						<Private-Package>org.javolution.*.internal.*,javax.realtime.*</Private-Package>
-						<Bundle-Activator>org.javolution.osgi.internal.JavolutionActivator</Bundle-Activator>
-						<Export-Service>org.javolution.xml.stream.XMLInputFactory,
-							org.javolution.xml.stream.XMLOutputFactory</Export-Service>
-					</instructions>
-				</configuration>
-			</plugin>
-
 			<!-- =============================== -->
 			<!-- Source code packaging (for IDE) -->
 			<!-- =============================== -->

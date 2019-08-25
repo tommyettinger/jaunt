@@ -8,41 +8,19 @@
  */
 package org.javolution.util;
 
-import static org.javolution.annotations.Realtime.Limit.CONSTANT;
-import static org.javolution.annotations.Realtime.Limit.LINEAR;
-import static org.javolution.annotations.Realtime.Limit.N_SQUARE;
+import org.javolution.annotations.Parallel;
+import org.javolution.annotations.Realtime;
+import org.javolution.text.TextBuilder;
+import org.javolution.util.function.*;
+import org.javolution.util.internal.collection.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.javolution.annotations.Parallel;
-import org.javolution.annotations.Realtime;
-import org.javolution.context.ConcurrentContext;
-import org.javolution.text.Cursor;
-import org.javolution.text.DefaultTextFormat;
-import org.javolution.text.TextContext;
-import org.javolution.text.TextFormat;
-import org.javolution.util.function.BinaryOperator;
-import org.javolution.util.function.Consumer;
-import org.javolution.util.function.Equality;
-import org.javolution.util.function.Function;
-import org.javolution.util.function.Predicate;
-import org.javolution.util.internal.collection.AtomicCollectionImpl;
-import org.javolution.util.internal.collection.ConcatCollectionImpl;
-import org.javolution.util.internal.collection.CustomEqualityCollectionImpl;
-import org.javolution.util.internal.collection.DistinctCollectionImpl;
-import org.javolution.util.internal.collection.FilteredCollectionImpl;
-import org.javolution.util.internal.collection.LinkedCollectionImpl;
-import org.javolution.util.internal.collection.MappedCollectionImpl;
-import org.javolution.util.internal.collection.ParallelCollectionImpl;
-import org.javolution.util.internal.collection.ReversedCollectionImpl;
-import org.javolution.util.internal.collection.SharedCollectionImpl;
-import org.javolution.util.internal.collection.SortedCollectionImpl;
-import org.javolution.util.internal.collection.UnmodifiableCollectionImpl;
+import static org.javolution.annotations.Realtime.Limit.*;
 
 /**
  * High-performance collection with {@link Realtime strict timing constraints}.
@@ -53,7 +31,7 @@ import org.javolution.util.internal.collection.UnmodifiableCollectionImpl;
  * Instance of this class may use custom element comparators instead of the default object equality 
  * when comparing elements. This affects the behavior of the contains, remove, containsAll, equals, and 
  * hashCode methods. The {@link java.util.Collection} contract is guaranteed to hold only for collections
- * using {@link Equality#STANDARD} for {@link #equality() elements comparisons}.
+ * using {@link Equality#standard()} for {@link #equality() elements comparisons}.
  * 
  * @param <E> the type of collection element ({@code null} values allowed)
  * 
@@ -61,7 +39,6 @@ import org.javolution.util.internal.collection.UnmodifiableCollectionImpl;
  * @version 7.0, March 31st, 2017
  */
 @Realtime
-@DefaultTextFormat(AbstractCollection.Format.class)
 public abstract class AbstractCollection<E> implements Collection<E>, Serializable, Cloneable {
 
     private static final long serialVersionUID = 0x700L; // Version.
@@ -92,15 +69,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
     public AbstractCollection<E> atomic() {
         return new AtomicCollectionImpl<E>(this);
     }
-
-    /**
-     * Returns a view allowing {@link Parallel parallel} operations to be performed {@link ConcurrentContext 
-     * concurrently}. 
-     */
-    public AbstractCollection<E> parallel() {
-        return new ParallelCollectionImpl<E>(this);
-    }
-
+    
     /**
      * Returns a view exposing elements in reversed iterative order.
      */
@@ -141,16 +110,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
     public <R> AbstractCollection<R> map(Function<? super E, ? extends R> function) {
         return new MappedCollectionImpl<E, R>(this, function);
     }
-
-    /**
-     * Returns a view disallowing {@link Parallel parallel} operations to be performed
-     * {@link ConcurrentContext concurrently}. This method returns {@code this} since 
-     * collections are sequential by default. This method is overridden by parallel views.
-     */
-    public AbstractCollection<E> sequential() {
-        return this;
-    }
-
+    
     /**
      * Returns an ordered view exposing its elements sorted according to the specified comparator.
      */
@@ -213,7 +173,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
      * 
      * @param consumer the functional consumer applied to the collection elements.
      */
-    @Parallel
+    
     @Realtime(limit = LINEAR)
     public void forEach(final Consumer<? super E> consumer) {
         iterator().hasNext(new Predicate<E>() {
@@ -231,7 +191,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
      * @param operator the binary operator applied to the collection elements.
      * @return the result of the reduction or {@code null} if the collection is empty.
      */
-    @Parallel
+    
     @Realtime(limit = LINEAR)
     public E reduce(BinaryOperator<E> operator) {
         Reduction<E> reduction = new Reduction<E>(operator);
@@ -246,7 +206,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
      * @param filter a predicate returning {@code true} for elements to be removed.
      * @return {@code true} if at least one element has been removed; {@code false} otherwise.
      */
-    @Parallel
+    
     @Realtime(limit = LINEAR)
     public abstract boolean removeIf(Predicate<? super E> filter);
 
@@ -257,7 +217,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
     /**
      * Returns any element from this collection or {@code null} if this collection is empty.
      */
-    @Parallel
+    
     @Realtime(limit = LINEAR)
     public E findAny() {
         FastIterator<E> itr = iterator();
@@ -267,7 +227,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
     /** 
      * Returns whether any elements of this collection match the provided predicate.
      */
-    @Parallel
+    
     @Realtime(limit = LINEAR)
     public boolean anyMatch(Predicate<? super E> predicate) {
         return iterator().hasNext(predicate);
@@ -278,7 +238,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
      * 
      * @return {@code !anyMatch(!predicate)}
      */
-    @Parallel
+    
     public final boolean allMatch(final Predicate<? super E> predicate) {
         Predicate<? super E> reversedPredicate = new Predicate<E>() { 
 
@@ -294,7 +254,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
      * 
      * @return {@code !anyMatch(predicate)}
      */
-    @Parallel
+    
     public final boolean noneMatch(Predicate<? super E> predicate) {
         return !anyMatch(predicate);
     }
@@ -303,7 +263,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
      * Returns the smallest element of this collection according to the specified comparator (convenience method). 
      * @return {@code reduce((e1, e2) -> comparator.compare(e1, e2) <= 0 ? e1 : e2)}
      */
-    @Parallel
+    
     public final E min(final Comparator<? super E> comparator) {
         return reduce(new BinaryOperator<E>() {
             @Override
@@ -317,7 +277,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
      * 
      * @return {@code reduce((e1, e2) -> comparator.compare(e1, e2) >= 0 ? e1 : e2)}
      */
-    @Parallel
+    
     public final E max(final Comparator<? super E> comparator) {
         return reduce(new BinaryOperator<E>() {
             @Override
@@ -329,7 +289,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
    /**
      * Returns the elements of this collection through reduction. 
      */
-    @Parallel
+    
     @Realtime(limit = LINEAR)
     public AbstractCollection<E> collect() {
         final FastTable<E> collection = new FastTable<E>();
@@ -372,26 +332,26 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
     public abstract boolean add(E element);
 
     /** Indicates if this collection is empty.*/
-    @Parallel
+    
     @Override
     @Realtime(limit = LINEAR, comment = "Could iterate the whole collection (e.g. filtered views).")
     public abstract boolean isEmpty();
 
     /** Returns the size of this collection.*/
-    @Parallel
+    
     @Override
     @Realtime(limit = LINEAR, comment = "Could count the elements (e.g. filtered views).")
     public abstract int size();
 
     /** Removes all elements from this collection.*/
-    @Parallel
+    
     @Override
     @Realtime(limit = LINEAR, comment = "Could remove the elements one at a time.")
     public abstract void clear();
 
     /** Indicates if this collection contains the specified element testing for element equality using this 
      *  collection {@link #equality}. */
-    @Parallel
+    
     @Override
     @Realtime(limit = LINEAR, comment = "Could search the whole collection.")
     public boolean contains(final Object searched) {
@@ -409,7 +369,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
 
     /** Removes a single instance of the specified element from this collection testing for element equality 
      *  using this collection {@link #equality}. */
-    @Parallel
+    
     @Override
     @Realtime(limit = LINEAR, comment = "Could search the whole collection.")
     public boolean remove(final Object searched) {
@@ -445,7 +405,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
 
     /** Indicates if this collection contains all the specified elements testing for element equality 
      *  using this collection {@link #equality}. */
-    @Parallel
+    
     @Override
     @Realtime(limit = N_SQUARE, comment="LINEAR if the specified collection is a SparseSet")
     public boolean containsAll(Collection<?> that) {
@@ -456,7 +416,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
 
     /** Removes all the specified elements from this collection testing for element equality 
      *  using this collection {@link #equality}.*/
-    @Parallel
+    
     @Override
     @Realtime(limit = N_SQUARE, comment="LINEAR if the specified collection is a SparseSet")
     public boolean removeAll(final Collection<?> that) {
@@ -470,7 +430,7 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
 
     /** Removes all the elements except those in the specified collection testing for element equality
      *  using this collection {@link #equality}. */
-    @Parallel
+    
     @Override
     @Realtime(limit = N_SQUARE, comment="LINEAR if the specified collection is a SparseSet")
     public boolean retainAll(final Collection<?> that) {
@@ -546,11 +506,20 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
         return super.hashCode(); 
     }
 
-    /** Returns the string representation of this collection using its default {@link TextFormat format}. */
+    /** Returns the string representation of this collection. */
     @Override
     @Realtime(limit = LINEAR)
     public String toString() {
-        return TextContext.getFormat(AbstractCollection.class).format(this);
+        Iterator<?> i = iterator();
+        TextBuilder dest = new TextBuilder();
+        dest.append('[');
+        while (i.hasNext()) {
+            dest.append(i.next());
+            if (i.hasNext()) {
+                dest.append(',').append(' ');
+            }
+        }
+        return dest.append(']').toString();
     }
 
     // //////////////////////////////////////////////////////////////////////////
@@ -587,30 +556,6 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
             return (AbstractCollection<E>) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError("Should not happen since this class is Cloneable !");
-        }
-    }
-
-    /**
-     * Default text format for fast collections (parsing not supported).
-     */
-    public static class Format extends TextFormat<AbstractCollection<?>> {
-
-        @Override
-        public AbstractCollection<Object> parse(CharSequence csq, Cursor cursor) throws IllegalArgumentException {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Appendable format(AbstractCollection<?> that, final Appendable dest) throws IOException {
-            Iterator<?> i = that.iterator();
-            dest.append('[');
-            while (i.hasNext()) {
-                TextContext.format(i.next(), dest);
-                if (i.hasNext()) {
-                    dest.append(',').append(' ');
-                }
-            }
-            return dest.append(']');
         }
     }
 

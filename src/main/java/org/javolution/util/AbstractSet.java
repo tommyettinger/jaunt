@@ -156,7 +156,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements So
     public abstract boolean add(E element, boolean allowDuplicate);
     
     @SuppressWarnings("unchecked")
-    @Parallel(false)
+    
     @Override
     @Realtime(limit = CONSTANT)
     public boolean contains(Object element) {
@@ -164,7 +164,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements So
     }
   
     @SuppressWarnings("unchecked")
-    @Parallel(false)
+    
     @Override
     @Realtime(limit = LINEAR, comment="Linear removal time for linked sets")
     public boolean remove(Object element) {

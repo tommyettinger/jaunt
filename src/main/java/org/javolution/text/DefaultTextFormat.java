@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * Specifies the default text format of a class (for parsing/formatting).
  *  
  * The default format is typically used by the {@link Object#toString()} method and can be locally overridden in 
- * the scope of a {@link javolution.text.TextContext TextContext}.
+ * the scope of a {@link org.javolution.text.TextContext TextContext}.
  *     
  * ```java
  * ​@DefaultTextFormat(Complex.Cartesian.class) 

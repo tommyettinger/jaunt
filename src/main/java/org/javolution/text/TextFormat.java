@@ -16,9 +16,6 @@ import java.io.IOException;
  *     it supports {@link CharSequence} and {@link Appendable} interfaces 
  *     for greater flexibility.</p>
  * 
- * <p> Instances of this class are typically retrieved from the 
- *     {@link DefaultTextFormat} inheritable annotation through the current 
- *     current {@link TextContext}.
  * {@code
  * {@literal@}DefaultTextFormat(Complex.Cartesian.class) 
  * public class Complex extends Number {

@@ -8,12 +8,12 @@
  */
 package org.javolution.util;
 
-import static org.javolution.annotations.Realtime.Limit.LINEAR;
-
 import org.javolution.annotations.Realtime;
 import org.javolution.util.function.Equality;
 import org.javolution.util.function.Indexer;
 import org.javolution.util.function.Order;
+
+import static org.javolution.annotations.Realtime.Limit.LINEAR;
 
 /**
  * High-performance ordered map / multimap based upon fast-access {@link FractalArray}. 
@@ -70,7 +70,6 @@ import org.javolution.util.function.Order;
  * ```java
  * FastMap<String, Integer> ranking = new FastMap<>().with("John Doe", 234).with("Jane Dee", 123).with("Sam Anta", null); 
  * ranking.values().removeIf(v -> v == null); // Remove all entries with null values.
- * ranking.values().parallel().removeIf(v -> v == null); // Same but performed in parallel.
  * ```
  * 
  * Unlike {@code ConcurrentHashMap}, FastMap allows for {@code null} values; to differentiate between no entry

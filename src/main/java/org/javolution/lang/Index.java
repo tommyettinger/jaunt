@@ -8,17 +8,10 @@
  */
 package org.javolution.lang;
 
-import java.io.IOException;
-import java.io.ObjectStreamException;
-
 import org.javolution.annotations.Realtime;
-import org.javolution.lang.MathLib;
-import org.javolution.text.Cursor;
-import org.javolution.text.DefaultTextFormat;
-import org.javolution.text.TextContext;
-import org.javolution.text.TextFormat;
-import org.javolution.text.TypeFormat;
 import org.javolution.util.function.Order;
+
+import java.io.ObjectStreamException;
 
 /**
  * <p> A non-negative number (64-bits unsigned) representing a position in an arrangement.
@@ -26,15 +19,12 @@ import org.javolution.util.function.Order;
  * FastMap<Index, Double> sparseVector = FastMap.newMap(Index.ORDER);
  * FastMap<Binary<Index,Index>, Double> sparseMatrix = FastMap.newMap(Index.QUADTREE_ORDER);
  * }</pre></p>
- *     
- * <p> {@link #UNIQUE Unicity} is maintained for small indices (no adverse effect on garbage collection).</p>
  * 
  * @author <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle</a>
  * @version 6.1, February 25, 2014
- * @see javolution.util.function.Indexer
+ * @see org.javolution.util.function.Indexer
  */
 @Realtime
-@DefaultTextFormat(Index.Format.class)
 public final class Index extends Number implements Comparable<Index>, Immutable {
     private static final long serialVersionUID = 0x700L; // Version.
 
@@ -61,52 +51,8 @@ public final class Index extends Number implements Comparable<Index>, Immutable 
 		}
     
     };
-
-    /**
-     * Default text format for indices (32-bits unsigned decimal 
-     * representation).
-     */
-    public static class Format extends TextFormat<Index> {
-
-        @Override
-        public Appendable format(Index index, Appendable dest) throws IOException {
-            return TypeFormat.format(index.longValue(), dest);
-        }
-
-        @Override
-        public Index parse(CharSequence csq, Cursor cursor)
-                throws IllegalArgumentException {
-            return Index.of((int) TypeFormat.parseLong(csq, cursor));
-        }
-
-    }
-    /**
-     * Holds the number of unique preallocated instances (default {@code 1024}). 
-     * This number is configurable, for example with
-     * {@code -Dorg.javolution.util.Index#UNIQUE=0} there is no unique instance.
-     */
-    public static final Configurable<Integer> UNIQUE = new Configurable<Integer>() {
-
-        @Override
-        protected Integer getDefault() {
-            return 1024;
-        }
-
-        @Override
-        protected Integer initialized(Integer value) {
-            if (value < 0)
-                throw new IllegalArgumentException();
-            return value;
-        }
-
-        @Override
-        protected Integer reconfigured(Integer oldCount, Integer newCount) {
-            throw new UnsupportedOperationException(
-                    "Unicity reconfiguration not supported.");
-        }
-    };
-
-    private static final Index[] INSTANCES = new Index[UNIQUE.get()];
+    
+    private static final Index[] INSTANCES = new Index[1024];
 
     /**
      * Holds the index unsigned {@code long} value.
@@ -266,7 +212,7 @@ public final class Index extends Number implements Comparable<Index>, Immutable 
 
     @Override
     public String toString() {
-        return TextContext.getFormat(Index.class).format(this);
+        return Long.toString(longValue());
     }
 
     /**

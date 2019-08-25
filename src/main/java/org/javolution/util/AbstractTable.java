@@ -119,14 +119,14 @@ public abstract class AbstractTable<E> extends AbstractCollection<E> implements 
     @Realtime(limit = CONSTANT)
     public abstract void clear();
 
-    @Parallel(false)
+    
     @Override
     @Realtime(limit = CONSTANT)
     public boolean isEmpty() {
         return size() == 0;
     }
 
-    @Parallel(false)
+    
     @Override
     @Realtime(limit = CONSTANT)
     public abstract int size();
@@ -135,7 +135,7 @@ public abstract class AbstractTable<E> extends AbstractCollection<E> implements 
     // Iterative methods.
     //
 
-    @Parallel(false)
+    
     @Realtime(limit = LINEAR)
     public boolean removeIf(Predicate<? super E> filter) {
         int j = 0;

@@ -181,7 +181,7 @@ public class FastSet<E> extends AbstractSet<E> {
         return true;
     }
          
-    @Parallel(false)
+    
     @Realtime(limit = CONSTANT)
     @Override
     public final E getAny(E element) {
@@ -254,7 +254,7 @@ public class FastSet<E> extends AbstractSet<E> {
         return new AscendingIteratorImpl(from);
     }
         
-    @Parallel(false)
+    
     @Override
     @Realtime(limit = CONSTANT)
     public final E removeAny(E element) {

@@ -1,10 +1,10 @@
 /**
 <p> Basic functions for lambda expressions and method references.</p>
     Most often, functions do not have a state and can be called concurrently, 
-    as indicated by the annotation {@link javolution.lang.Parallelizable Parallelizable}.</p>
+    as indicated by the annotation {@link org.javolution.lang.Parallelizable Parallelizable}.</p>
     
 <p> Functions may take an arbitrary number of arguments through the use of the 
-    {@link javolution.lang.Binary Binary}/ {@link javolution.lang.Ternary Ternary} 
+    {@link org.javolution.lang.Binary Binary}/ {@link org.javolution.lang.Ternary Ternary} 
     types or no argument at all using the standard {@link java.lang.Void} class.  
 [code]
 // Function indicating if two persons are married.
