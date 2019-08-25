@@ -72,7 +72,7 @@ public abstract class FractalArrayImpl<E> extends FractalArray<E> {
 
 	/** Clears the lowest bits, bits should be in range 0..63 (1L << 64 == 1L). */
 	private static final long clearLowBits(long value, int bits) {
-		return value >>> bits << bits;
+		return (value >>> bits) << bits;
 	}
 
 	/** The empty singleton. */
@@ -617,7 +617,7 @@ public abstract class FractalArrayImpl<E> extends FractalArray<E> {
 				FractalArrayImpl<E> inner = inners[i];
 				if (inner == null)
 					continue;
-				inner.prefix = indexFor(i, 0L); // Full prefix is the index of the first fractal element.
+				//inner.prefix = indexFor(i, 0L); // Full prefix is the index of the first fractal element.
 				return inner;
 			}
 		}

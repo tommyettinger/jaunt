@@ -59,7 +59,6 @@ import static org.javolution.annotations.Realtime.Limit.LINEAR;
  *                          "http://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock">readers-writer locks</a>.</li>
  *    <li>{@link #atomic} - Thread-safe view for which all reads are mutex-free and map updates 
  *                           (e.g. {@link #putAll putAll}) are atomic.</li>
- *    <li>{@link #reversed} - Reversed order view.</li>
  *    <li>{@link #linked} - View exposing each entry based on the {@link #put insertion} order in the view.</li>
  *    <li>{@link #unmodifiable} - View which does not allow for modification.</li>
  *    <li>{@link #valuesEquality} - View using the specified equality comparator for the map's values.</li>
@@ -130,12 +129,12 @@ public class FastMap<K, V> extends AbstractMap<K, V> {
     private final Equality<? super V> valuesEquality; 
     private final FastSet<Entry<K,V>> entries; 
     
-    /** Creates a {@link Equality#STANDARD standard} map arbitrarily ordered. */
+    /** Creates a {@link Equality#standard()}  standard} map arbitrarily ordered. */
     public FastMap() {
         this(Order.standard());
     }
 
-    /** Creates a {@link Equality#STANDARD standard} map ordered using the specified indexer function 
+    /** Creates a {@link Equality#standard()}  standard} map ordered using the specified indexer function 
      * (convenience method).*/
     public FastMap(final Indexer<? super K> indexer) {
         this(Order.valueOf(indexer));
@@ -158,8 +157,8 @@ public class FastMap<K, V> extends AbstractMap<K, V> {
             public boolean areEqual(Entry<K, V> left, Entry<K, V> right) {
             	if (left == right) return true;
             	if ((left == null) || (right == null)) return false;
-                return FastMap.this.keyOrder.areEqual(left.getKey(), right.getKey()) && 
-                        FastMap.this.valuesEquality.areEqual(left.getValue(), right.getValue());
+                return FastMap.this.keyOrder.areEqual(left.getKey(), right.getKey());// && 
+                        //FastMap.this.valuesEquality.areEqual(left.getValue(), right.getValue());
             }
 
             @Override

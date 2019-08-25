@@ -47,37 +47,37 @@
 <!--			<artifactId>native-maven-plugin</artifactId>-->
 <!--			<version>1.0-alpha-8</version>-->
 <!--		</dependency>-->
-		<dependency> <!-- OSGI Core Library -->
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<version>4.3.1</version>
-		</dependency>
-		<dependency> <!-- OSGI Compendium (log service) -->
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-			<version>4.3.1</version>
-		</dependency>
-		<dependency> <!-- OpenCL Binding -->
-			<groupId>com.nativelibs4java</groupId>
-			<artifactId>javacl</artifactId>
-			<version>1.0.0-RC4</version>
-		</dependency>
-		<dependency> <!-- JAXB API (no more included in Java SE 9+)  -->
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.2.11</version>
-        </dependency>
+<!--		<dependency> &lt;!&ndash; OSGI Core Library &ndash;&gt;-->
+<!--			<groupId>org.osgi</groupId>-->
+<!--			<artifactId>org.osgi.core</artifactId>-->
+<!--			<version>4.3.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency> &lt;!&ndash; OSGI Compendium (log service) &ndash;&gt;-->
+<!--			<groupId>org.osgi</groupId>-->
+<!--			<artifactId>org.osgi.compendium</artifactId>-->
+<!--			<version>4.3.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency> &lt;!&ndash; OpenCL Binding &ndash;&gt;-->
+<!--			<groupId>com.nativelibs4java</groupId>-->
+<!--			<artifactId>javacl</artifactId>-->
+<!--			<version>1.0.0-RC4</version>-->
+<!--		</dependency>-->
+<!--		<dependency> &lt;!&ndash; JAXB API (no more included in Java SE 9+)  &ndash;&gt;-->
+<!--            <groupId>javax.xml.bind</groupId>-->
+<!--            <artifactId>jaxb-api</artifactId>-->
+<!--            <version>2.2.11</version>-->
+<!--        </dependency>-->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.21</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.slf4j</groupId>-->
+<!--			<artifactId>slf4j-api</artifactId>-->
+<!--			<version>1.7.21</version>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>

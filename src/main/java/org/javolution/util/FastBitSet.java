@@ -8,17 +8,17 @@
  */
 package org.javolution.util;
 
-import static org.javolution.annotations.Realtime.Limit.LINEAR;
-
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
 import org.javolution.annotations.Nullable;
 import org.javolution.annotations.Realtime;
 import org.javolution.lang.Index;
 import org.javolution.lang.MathLib;
 import org.javolution.util.function.Order;
 import org.javolution.util.function.Predicate;
+
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
+import static org.javolution.annotations.Realtime.Limit.LINEAR;
 
 /**
  * A high-performance bit-set integrated with the collection framework as a set of {@link Index indices} 
@@ -49,7 +49,7 @@ public class FastBitSet extends AbstractSet<Index> {
 
     @Override
      public final boolean add(Index index, boolean allowDuplicate) {
-         return add(index); // allowDuplicate flag ignored.
+         return getAndSet(index.intValue(), true); // allowDuplicate flag ignored.
      }
 
      /**

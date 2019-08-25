@@ -8,14 +8,12 @@
  */
 package org.javolution.text;
 
-import java.io.PrintStream;
-
 import org.javolution.annotations.Realtime;
-import org.javolution.lang.MathLib;
 import org.javolution.lang.Immutable;
-import org.javolution.util.FastMap;
+import org.javolution.lang.MathLib;
 import org.javolution.util.function.Order;
-import org.javolution.xml.XMLSerializable;
+
+import java.io.PrintStream;
 
 /**
  * <p> An immutable character sequence with fast {@link #concat concatenation}, 
@@ -38,14 +36,6 @@ import org.javolution.xml.XMLSerializable;
  *     <li> More flexible as they allows for search and comparison with any 
  *          <code>java.lang.String</code> or <code>CharSequence</code>.</li>
  *     </ul>
- * <p> {@link Text} literals should be explicitly {@link #intern interned}. 
- *     Unlike strings literals and strings-value constant expressions,
- *     interning is not implicit. For example:
- *     {@code
- *         final static Text TRUE = Text.intern("true");
- *         final static Text FALSE = Text.intern("false");
- *     }
- * </p>
  *     
  * <p><i> Implementation Note: To avoid expensive copy operations , 
  *        {@link Text} instances are broken down into smaller immutable 
@@ -62,7 +52,7 @@ import org.javolution.xml.XMLSerializable;
  */
 @Realtime
 public final class Text implements CharSequence, Comparable<CharSequence>,
-		XMLSerializable, Immutable {
+		Immutable {
 
 	private static final long serialVersionUID = 0x600L; // Version.
 
@@ -74,17 +64,12 @@ public final class Text implements CharSequence, Comparable<CharSequence>,
 	/**
 	 * Holds the mask used to ensure a block boundary cesures.
 	 */
-	private static final int BLOCK_MASK = ~(BLOCK_SIZE - 1);
-
-	/**
-	 * Holds the texts interned in immortal memory.
-	 */
-	private static final FastMap<Text, Text> INTERN = new FastMap<Text, Text>(Order.lexical());
+	private static final int BLOCK_MASK = -BLOCK_SIZE;
 
 	/**
 	 * Holds an empty character sequence.
 	 */
-	public static final Text EMPTY = Text.intern("");
+	public static final Text EMPTY = new Text("");
 
 	/**
 	 * Holds the raw data (primitive) or <code>null</code> (composite).
@@ -243,9 +228,9 @@ public final class Text implements CharSequence, Comparable<CharSequence>,
 		return b ? TRUE : FALSE;
 	}
 
-	private static final Text TRUE = Text.intern("true");
+	private static final Text TRUE = new Text("true");
 
-	private static final Text FALSE = Text.intern("false");
+	private static final Text FALSE = new Text("false");
 
 	/**
 	 * Returns the text instance corresponding to the specified character. 
@@ -728,33 +713,6 @@ public final class Text implements CharSequence, Comparable<CharSequence>,
 			last--;
 		}
 		return subtext(first, last + 1);
-	}
-
-	/**
-	 * Returns a text equals to this one from a pool of
-	 * unique text instances.  
-	 * 
-	 * @return an unique text instance allocated in permanent memory.
-	 * @deprecated Use {@link Text#intern(CharSequence)} instead.
-	 */
-	public Text intern() {
-		Text txt = INTERN.putIfAbsent(this, this);
-		return txt == null ? this : txt;
-	}
-
-	/**
-	 * Returns the text corresponding to the specified character sequence
-	 * from a pool of unique text instances.  
-	 * 
-	 * @param csq Character Sequence
-	 * @return an unique text instance allocated in permanent memory.
-	 */
-	public static Text intern(CharSequence csq) {
-		Text txt = INTERN.get(csq);
-		if (txt != null) return txt;
-		txt = Text.valueOf(csq);
-		Text previous = INTERN.putIfAbsent(txt, txt);
-		return previous == null ? txt : previous;
 	}
 
 	/**

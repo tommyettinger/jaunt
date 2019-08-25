@@ -8,17 +8,14 @@
  */
 package org.javolution.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class FastSetTest {
 
@@ -97,7 +94,7 @@ public class FastSetTest {
 		set.add("A");
 		
 		_fastSet.add("AA");
-		_fastSet.add("A");		
+		_fastSet.add("A");
 		_fastSet.add("AAAA");
 		_fastSet.add("AAA");	
 		

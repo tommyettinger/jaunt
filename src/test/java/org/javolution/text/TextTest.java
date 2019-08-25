@@ -8,12 +8,10 @@
  */
 package org.javolution.text;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class TextTest {
 
@@ -152,13 +150,6 @@ public class TextTest {
 	public void testInsert(){
 		_text = _text.insert(2, Text.valueOf("Test"));
 		assertEquals("insert() Text Is TeTestst", Text.valueOf("TeTestst"), _text);
-	}
-	
-	@Test
-	public void testIntern(){
-		_text = Text.intern("Test");
-		Text text = Text.intern("Test");
-		assertTrue("Text Instances Are The Same", _text==text);
 	}
 	
 	@Test
