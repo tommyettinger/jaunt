@@ -8,18 +8,14 @@
  */
 package org.javolution.util.internal.set;
 
-import java.util.Collection;
-import java.util.Comparator;
-
 import org.javolution.util.AbstractCollection;
 import org.javolution.util.AbstractSet;
 import org.javolution.util.FastIterator;
-import org.javolution.util.function.BinaryOperator;
-import org.javolution.util.function.Consumer;
-import org.javolution.util.function.Equality;
-import org.javolution.util.function.Order;
-import org.javolution.util.function.Predicate;
+import org.javolution.util.function.*;
 import org.javolution.util.internal.ReadWriteLockImpl;
+
+import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * A shared view over a set (reads-write locks).
@@ -332,16 +328,6 @@ public final class SharedSetImpl<E> // implements AbstractSetMethods<E> {
         lock.readLock.lock();
         try {
             return inner.toString();
-        } finally {
-            lock.readLock.unlock();
-        }
-    }
-
-    @Override
-    public AbstractSet<E>[] trySplit(int n) {
-        lock.readLock.lock();
-        try {
-            return inner.clone().trySplit(n);
         } finally {
             lock.readLock.unlock();
         }

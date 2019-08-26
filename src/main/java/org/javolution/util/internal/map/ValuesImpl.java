@@ -113,14 +113,5 @@ public final class ValuesImpl<K, V> extends AbstractCollection<V> {
         return equality;
     }
 
-    @Override
-    public AbstractCollection<V>[] trySplit(int n) {
-        AbstractSet<Entry<K,V>>[] entriesSplit = entries.trySplit(n);
-        @SuppressWarnings("unchecked")
-        AbstractCollection<V>[] split = new AbstractCollection[entriesSplit.length];
-        for (int i=0; i < split.length; i++) split[i] = new ValuesImpl<K,V>(entriesSplit[i], equality);
-        return split;
-    }
-
 
 }

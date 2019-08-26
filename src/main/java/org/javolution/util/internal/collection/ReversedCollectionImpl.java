@@ -75,9 +75,4 @@ public final class ReversedCollectionImpl<E> extends AbstractCollection<E> {
         return inner.size();
     }
 
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        return inner.trySplit(n);
-    }
-
 }

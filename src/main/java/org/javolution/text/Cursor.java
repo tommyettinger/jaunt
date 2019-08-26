@@ -23,19 +23,6 @@ package org.javolution.text;
  *        a
  *        test
  *     Cursors are typically used with {@link TextFormat} instances.
- *     {@code
- *     // Parses decimal number (e.g. "xxx.xxxxxExx" or "NaN")
- *     public Decimal parse(CharSequence csq, Cursor cursor) throws IllegalArgumentException {
- *         TextFormat<LargeInteger> largeIntegerFormat = TextContext.getFormat(LargeInteger.class);
- *         if (cursor.skip("NaN", csq))
- *             return Decimal.NaN;
- *         LargeInteger significand = LargeIntegerFormat.parse(csq, cursor);
- *         LargeInteger fraction = cursor.skip('.', csq) ? largeIntegerFormat.parse(csq, cursor) : LargeInteger.ZERO;
- *         int exponent = cursor.skip(CharSet.valueOf('E', 'e'), csq) ? TypeFormat.parseInt(csq, cursor) : 0;
- *         int fractionDigits = fraction.digitLength();
- *         return Decimal.valueOf(significand.E(fractionDigits).plus(fraction), exponent - fractionDigits);
- *     }
- *     }
  * </p>
  *
  * @author  <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle</a>

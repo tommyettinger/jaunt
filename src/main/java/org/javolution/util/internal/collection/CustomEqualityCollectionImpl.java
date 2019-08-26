@@ -72,12 +72,4 @@ public final class CustomEqualityCollectionImpl<E> extends AbstractCollection<E>
         return inner.size();
     }
 
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        AbstractCollection<E>[] subViews = inner.trySplit(n);
-        for (int i = 0; i < subViews.length; i++)
-            subViews[i] = new CustomEqualityCollectionImpl<E>(subViews[i], equality);
-        return subViews;
-    }
-
 }

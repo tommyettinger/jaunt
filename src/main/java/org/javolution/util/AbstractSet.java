@@ -8,29 +8,21 @@
  */
 package org.javolution.util;
 
-import static org.javolution.annotations.Realtime.Limit.CONSTANT;
-import static org.javolution.annotations.Realtime.Limit.LINEAR;
+import org.javolution.annotations.Nullable;
+import org.javolution.annotations.ReadOnly;
+import org.javolution.annotations.Realtime;
+import org.javolution.util.function.Equality;
+import org.javolution.util.function.Order;
+import org.javolution.util.function.Predicate;
+import org.javolution.util.internal.set.*;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedSet;
 
-import org.javolution.annotations.Nullable;
-import org.javolution.annotations.Parallel;
-import org.javolution.annotations.ReadOnly;
-import org.javolution.annotations.Realtime;
-import org.javolution.lang.MathLib;
-import org.javolution.util.function.Equality;
-import org.javolution.util.function.Order;
-import org.javolution.util.function.Predicate;
-import org.javolution.util.internal.set.AtomicSetImpl;
-import org.javolution.util.internal.set.FilteredSetImpl;
-import org.javolution.util.internal.set.LinkedSetImpl;
-import org.javolution.util.internal.set.MultiSetImpl;
-import org.javolution.util.internal.set.SharedSetImpl;
-import org.javolution.util.internal.set.SubSetImpl;
-import org.javolution.util.internal.set.UnmodifiableSetImpl;
+import static org.javolution.annotations.Realtime.Limit.CONSTANT;
+import static org.javolution.annotations.Realtime.Limit.LINEAR;
 
 /**
  * High-performance ordered set / multiset with {@link Realtime strict timing constraints}.
@@ -217,27 +209,6 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements So
         for (E e : this) 
             if (e != null) hash += order.indexOf(e);
         return hash;
-    }
-    
-    /**  
-     * Splits into filtered sets with filter based on the system identity hash code of the set element
-     * (to ensure balanced distribution).
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    @Realtime(limit = CONSTANT)
-    public AbstractSet<E>[] trySplit(final int n) {
-        AbstractSet<E>[] split = new AbstractSet[n];        
-        for (int i=0; i < n; i++) {
-            final int m = i;
-            split[i] = this.filter(new Predicate<E>() {
-                @Override
-                public boolean test(E param) {
-                    int hash = MathLib.hash(System.identityHashCode(param));
-                    return Math.abs(hash) % n == m;
-                }}).unmodifiable();
-        }
-        return split;
     }
 
 

@@ -1,7 +1,6 @@
 /**
 <p> Basic functions for lambda expressions and method references.</p>
-    Most often, functions do not have a state and can be called concurrently, 
-    as indicated by the annotation {@link org.javolution.lang.Parallelizable Parallelizable}.</p>
+    Most often, functions do not have a state and can be called concurrently.</p>
     
 <p> Functions may take an arbitrary number of arguments through the use of the 
     {@link org.javolution.lang.Binary Binary}/ {@link org.javolution.lang.Ternary Ternary} 

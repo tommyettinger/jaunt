@@ -95,14 +95,6 @@ public final class FilteredSetImpl<E> extends AbstractSet<E> {
     }
 
     @Override
-    public AbstractSet<E>[] trySplit(int n) {
-        AbstractSet<E>[] subViews = inner.trySplit(n);
-        for (int i = 0; i < subViews.length; i++)
-            subViews[i] = new FilteredSetImpl<E>(subViews[i], filter);
-        return subViews;
-    }
-
-    @Override
     public E getAny(E element) {
         return filter.test(element) ? inner.getAny(element) : null;
     }

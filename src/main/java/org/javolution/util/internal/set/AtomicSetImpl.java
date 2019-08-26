@@ -259,9 +259,4 @@ public final class AtomicSetImpl<E>  // implements AbstractSetMethods<E> {
         return innerConst.toString();
     }
 
-    @Override
-    public AbstractSet<E>[] trySplit(int n) {
-        return innerConst.trySplit(n);
-    }
- 
 }

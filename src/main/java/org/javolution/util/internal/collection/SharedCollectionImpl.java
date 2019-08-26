@@ -293,14 +293,4 @@ public final class SharedCollectionImpl<E> // implements AbstractCollectionMetho
         }
     }
 
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        lock.readLock.lock();
-        try {
-            return inner.clone().trySplit(n);
-        } finally {
-            lock.readLock.unlock();
-        }
-    }
-
 }

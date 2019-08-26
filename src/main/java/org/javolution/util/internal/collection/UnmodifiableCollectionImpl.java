@@ -72,8 +72,4 @@ public final class UnmodifiableCollectionImpl<E> extends AbstractCollection<E> {
         return inner.size();
     }
 
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        return inner.trySplit(n); // Read-only views (see trySplit contract)
-    }
 }

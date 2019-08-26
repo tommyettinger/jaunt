@@ -113,10 +113,4 @@ public final class ConcatCollectionImpl<E> extends AbstractCollection<E> {
         return first.equality();
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        return new AbstractCollection[] { first, second };
-    }
-    
 }

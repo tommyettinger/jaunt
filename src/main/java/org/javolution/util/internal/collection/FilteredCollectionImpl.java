@@ -86,14 +86,6 @@ public final class FilteredCollectionImpl<E> extends AbstractCollection<E> {
         return count;
     }
 
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        AbstractCollection<E>[] subViews = inner.trySplit(n);
-        for (int i = 0; i < subViews.length; i++)
-            subViews[i] = new FilteredCollectionImpl<E>(subViews[i], filter);
-        return subViews;
-    }
-
     /** Returns an iterator filtering elements iterated. */
     public static final class IteratorImpl<E> implements FastIterator<E> {
         private final FastIterator<E> innerItr;

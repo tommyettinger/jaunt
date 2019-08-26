@@ -91,12 +91,6 @@ public final class DistinctCollectionImpl<E> extends AbstractCollection<E> {
         return count;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        return new AbstractCollection[] { this }; // Does not split.
-    }
-
     /** Iterator not returning twice the same element. */
     private static final class IteratorImpl<E> implements FastIterator<E> {
         private final FastIterator<E> innerItr;

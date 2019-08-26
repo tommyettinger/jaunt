@@ -79,15 +79,6 @@ public final class MappedCollectionImpl<E, R> extends AbstractCollection<R> {
         return inner.size();
     }
 
-    @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public AbstractCollection<R>[] trySplit(int n) {
-        AbstractCollection[] subViews = inner.trySplit(n);
-        for (int i = 0; i < subViews.length; i++)
-            subViews[i] = new MappedCollectionImpl(subViews[i], function);
-        return subViews;
-    }
-
     /** Iterator over mapped collections. */
     private static final class IteratorImpl<E, R> implements FastIterator<R> {
         private final FastIterator<E> innerItr;

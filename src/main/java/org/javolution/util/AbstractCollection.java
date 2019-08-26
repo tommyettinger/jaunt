@@ -8,7 +8,6 @@
  */
 package org.javolution.util;
 
-import org.javolution.annotations.Parallel;
 import org.javolution.annotations.Realtime;
 import org.javolution.text.TextBuilder;
 import org.javolution.util.function.*;
@@ -532,21 +531,6 @@ public abstract class AbstractCollection<E> implements Collection<E>, Serializab
 
     /** Returns the element equality used for element comparison. */
     public abstract Equality<? super E> equality();
-
-    /**
-     * Returns sub-views over this collection to support {@link #parallel} processing. 
-     * How this collection splits (or does not split) is collection dependent (for example {@link #distinct}
-     * views do not split). There is no guarantee over the iterative order of the sub-views which may 
-     * be different from this collection iterative order.
-     * 
-     * Any attempt to modify this collection through its sub-views will result in a 
-     * {@link UnsupportedOperationException} being thrown.
-     * 
-     * @param n the desired number of independent views.
-     * @return the unmodifiable sub-views (array of length in range [1..n])
-     * @throws IllegalArgumentException if {@code n <= 0} 
-     */
-    public abstract AbstractCollection<E>[] trySplit(int n);
 
     /** Returns a copy of this collection; updates of the copy should not impact the original. */
     @Realtime(limit = LINEAR)

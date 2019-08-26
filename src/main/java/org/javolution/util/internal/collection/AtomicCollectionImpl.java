@@ -184,9 +184,4 @@ public final class AtomicCollectionImpl<E> // implements AbstractCollectionMetho
         return innerConst.toString();
     }
 
-    @Override
-    public AbstractCollection<E>[] trySplit(int n) {
-        return innerConst.trySplit(n);
-    }
-
 }

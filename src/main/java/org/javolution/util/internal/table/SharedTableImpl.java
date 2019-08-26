@@ -478,16 +478,6 @@ public final class SharedTableImpl<E> //implements AbstractTableMethods<E> {
     }
 
     @Override
-    public AbstractTable<E>[] trySplit(int n) {
-        lock.readLock.lock();
-        try {
-            return inner.clone().trySplit(n);
-        } finally {
-            lock.readLock.unlock();
-        }
-    }
-
-    @Override
     public final boolean offer(@Nullable E e) {
         return offerLast(e);
     }

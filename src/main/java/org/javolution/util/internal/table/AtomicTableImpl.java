@@ -309,11 +309,6 @@ public final class AtomicTableImpl<E> // implements AbstractTableMethods<E> {
     }
 
     @Override
-    public AbstractTable<E>[] trySplit(int n) {
-        return innerConst.trySplit(n);
-    }
-
-    @Override
     public AbstractCollection<E> collect() {
         return innerConst.collect();
     }

@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
 import org.javolution.annotations.Nullable;
-import org.javolution.annotations.Parallel;
 import org.javolution.annotations.ReadOnly;
 import org.javolution.annotations.Realtime;
 import org.javolution.util.function.Equality;
@@ -456,21 +455,7 @@ public abstract class AbstractTable<E> extends AbstractCollection<E> implements 
         qs.sort();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    @Realtime(limit = CONSTANT)
-    public AbstractTable<E>[] trySplit(int n) {
-        AbstractTable<E>[] split = new AbstractTable[n];
-        for (int i = 0, from = 0, size = size(), incr = size / n, rem = size % n; i < n; i++) {
-            int to = from + incr;
-            if (rem-- > 0) to++;
-            split[i] = new SubTableImpl<E>(this, from, to).unmodifiable();
-            from = to;
-        }
-        return split;
-    }  
-   
-  
+
     /**
      * Replaced by {@link #subTable(int, int)}.
      */
