@@ -18,7 +18,6 @@ import org.javolution.text.TextBuilder;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import static javolution.lang.Realtime.Limit.*;
@@ -26,11 +25,6 @@ import static javolution.lang.Realtime.Limit.*;
 /**
  * <p> A closure-based collection supporting numerous views which can be chained.
  * <ul>
- *    <li>{@link #atomic} - Thread-safe view for which all reads are mutex-free 
- *    and collection updates (including {@link #addAll addAll}, {@link #removeIf removeIf}} are atomic.</li>
- *    <li>{@link #shared} - Thread-safe view using allowing concurrent reads based 
- *    on mutex (<a href="http://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock">
- *    readers-writer locks).</li>
  *    <li>{@link #sequential} - View disallowing parallel processing.</li>
  *    <li>{@link #unmodifiable} - View which does not allow any modification.</li>
  *    <li>{@link #filtered filtered(filter)} - View exposing only the elements matching the specified filter.</li>
@@ -140,32 +134,6 @@ public abstract class FastCollection<E> implements Collection<E>, Serializable {
     // Views.
     //
 
-    /**
-     * Returns an atomic view over this collection. All operations that write 
-     * or access multiple elements in the collection (such as addAll(), 
-     * retainAll()) are atomic. 
-     * Iterators on atomic collections are <b>thread-safe</b> 
-     * (no {@link ConcurrentModificationException} possible).
-     */
-    
-    public FastCollection<E> atomic() {
-        return new AtomicCollectionImpl<E>(service());
-    }
-
-    /**
-     * Returns a thread-safe view over this collection. The shared view
-     * allows for concurrent read as long as there is no writer. 
-     * The default implementation is based on <a href=
-     * "http://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock">
-     * readers-writers locks</a> giving priority to writers. 
-     * Iterators on shared collections are <b>thread-safe</b> 
-     * (no {@link ConcurrentModificationException} possible).
-     */
-    
-    public FastCollection<E> shared() {
-        return new SharedCollectionImpl<E>(service());
-    }
-
     /** 
      * Returns a sequential view of this collection. Using this view, 
      * all closure-based iterations are performed sequentially.
@@ -259,9 +227,6 @@ public abstract class FastCollection<E> implements Collection<E>, Serializable {
 
     /** 
      * Executes the specified update action on this collection.
-     * For {@link #atomic() atomic} collections the update is atomic 
-     * (either concurrent readers see the full result of the action or
-     * nothing).
      *    
      * @param action the update action.
      * @throws ClassCastException if the action type is not compatible with 
@@ -294,8 +259,7 @@ public abstract class FastCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Removes from this collection all the elements matching the specified
-     * functional predicate (convenience method). Removals are performed
-     * atomically if this collection is {@link #atomic() atomic}.
+     * functional predicate (convenience method).
      * 
      * @param filter a predicate returning {@code true} for elements to be removed.
      * @return {@code true} if at least one element has been removed;

@@ -84,9 +84,4 @@ public class UnmodifiableCollectionImpl<E> extends CollectionView<E> {
         return target().size();
     }
 
-    @Override
-    public CollectionService<E> threadSafe() {
-        return this;
-    }
-
 }

@@ -23,9 +23,6 @@ public interface TableService<E> extends CollectionService<E>, List<E>, Deque<E>
 
     @Override
     TableService<E> subList(int fromIndex, int toIndex);
-    
-    @Override
-    TableService<E> threadSafe(); 
 
 
 }

@@ -8,10 +8,10 @@
  */
 package javolution.util.internal.table;
 
+import javolution.util.function.Equality;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import javolution.util.function.Equality;
 
 /**
  * The default {@link javolution.util.FastTable FastTable} implementation 
@@ -96,13 +96,6 @@ public class FastTableImpl<E> extends TableView<E> {
         fractal = null;
         capacity = 0;
         size = 0;
-    }
-
-    @Override
-    public FastTableImpl<E> clone() { // Make a copy.
-        FastTableImpl<E> copy = new FastTableImpl<E>(comparator());
-        copy.addAll(this);
-        return copy;
     }
 
     @Override

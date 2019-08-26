@@ -23,8 +23,4 @@ public class UnmodifiableSetImpl<E> extends UnmodifiableCollectionImpl<E>
         super(target);
     }
 
-    @Override
-    public SetService<E> threadSafe() {
-        return this;
-    }
 }

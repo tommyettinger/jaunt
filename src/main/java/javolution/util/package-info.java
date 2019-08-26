@@ -1,11 +1,6 @@
 /**
 <p> High-performance collection classes with {@link javolution.lang.Realtime 
     worst case execution time behavior} documented.</p>
-<p> Whereas Java current evolution leads to more and more classes being parts of 
-    the standard library; Javolution approach is quite the opposite. It aims to
-    provide only the quintessential classes from which all others can be derived.
-    </p>
-    <img src="doc-files/architecture.png" /> 
 
 <h2><a name="FAQ">FAQ:</a></h2>
 <ol>

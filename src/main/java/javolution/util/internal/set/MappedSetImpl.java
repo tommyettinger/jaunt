@@ -34,9 +34,4 @@ public abstract class MappedSetImpl<E, R> extends MappedCollectionImpl<E, R>
     @Override
     public abstract boolean remove(Object r);
 
-    @Override
-    public SetService<R> threadSafe() {
-        return new SharedSetImpl<R>(this);
-    }
-
 }

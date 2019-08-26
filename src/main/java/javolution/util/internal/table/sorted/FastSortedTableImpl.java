@@ -51,11 +51,6 @@ public class FastSortedTableImpl<E> extends FastTableImpl<E> implements
         return positionOf(element, 0, size());
     }
 
-    @Override
-    public SortedTableService<E> threadSafe() {
-        return new SharedSortedTableImpl<E>(this);
-    }
-
     private int positionOf(E element, int start, int length) {
         if (length == 0) return start;
         int half = length >> 1;

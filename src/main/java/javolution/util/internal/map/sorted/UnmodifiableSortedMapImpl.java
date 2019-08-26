@@ -9,7 +9,6 @@
 package javolution.util.internal.map.sorted;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import javolution.util.internal.map.UnmodifiableMapImpl;
 import javolution.util.service.SortedMapService;
@@ -66,12 +65,7 @@ public class UnmodifiableSortedMapImpl<K, V> extends UnmodifiableMapImpl<K, V> i
         return new SubSortedMapImpl<K,V>(this, fromKey, null);
     }
 
-    @Override
-    public SortedMapService<K, V> threadSafe() {
-        return this;
-    }
-    
-    
+
     @Override
     protected SortedMapService<K,V> target() {
         return (SortedMapService<K,V>) super.target();

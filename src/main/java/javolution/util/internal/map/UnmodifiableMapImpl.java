@@ -81,11 +81,6 @@ public class UnmodifiableMapImpl<K, V> extends MapView<K, V> {
     }
 
     @Override
-    public MapService<K, V> threadSafe() {
-        return this;
-    }
-
-    @Override
     public Equality<? super V> valueComparator() {
         return target().valueComparator();
     }

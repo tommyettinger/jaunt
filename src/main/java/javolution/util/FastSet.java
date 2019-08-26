@@ -13,9 +13,7 @@ import javolution.util.function.Equalities;
 import javolution.util.function.Equality;
 import javolution.util.function.Predicate;
 import javolution.util.internal.map.FastMapImpl;
-import javolution.util.internal.set.AtomicSetImpl;
 import javolution.util.internal.set.FilteredSetImpl;
-import javolution.util.internal.set.SharedSetImpl;
 import javolution.util.internal.set.UnmodifiableSetImpl;
 import javolution.util.service.SetService;
 
@@ -72,18 +70,8 @@ public class FastSet<E> extends FastCollection<E> implements Set<E> {
     //
 
     @Override
-    public FastSet<E> atomic() {
-        return new FastSet<E>(new AtomicSetImpl<E>(service()));
-    }
-
-    @Override
     public FastSet<E> filtered(final Predicate<? super E> filter) {
         return new FastSet<E>(new FilteredSetImpl<E>(service(), filter));
-    }
-
-    @Override
-    public FastSet<E> shared() {
-        return new FastSet<E>(new SharedSetImpl<E>(service()));
     }
 
     @Override

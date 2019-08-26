@@ -50,11 +50,6 @@ public class UnmodifiableSortedSetImpl<E> extends UnmodifiableSetImpl<E>
     }
 
     @Override
-    public SortedSetService<E> threadSafe() {
-        return this;
-    }
-
-    @Override
     protected SortedSetService<E> target() {
         return (SortedSetService<E>) super.target();
     }

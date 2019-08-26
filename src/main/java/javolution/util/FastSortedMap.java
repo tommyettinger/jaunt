@@ -8,19 +8,17 @@
  */
 package javolution.util;
 
-import static javolution.lang.Realtime.Limit.LOG_N;
+import javolution.lang.Realtime;
+import javolution.util.function.Equalities;
+import javolution.util.function.Equality;
+import javolution.util.internal.map.sorted.FastSortedMapImpl;
+import javolution.util.internal.map.sorted.UnmodifiableSortedMapImpl;
+import javolution.util.service.SortedMapService;
 
 import java.util.Comparator;
 import java.util.SortedMap;
 
-import javolution.lang.Realtime;
-import javolution.util.function.Equalities;
-import javolution.util.function.Equality;
-import javolution.util.internal.map.sorted.AtomicSortedMapImpl;
-import javolution.util.internal.map.sorted.FastSortedMapImpl;
-import javolution.util.internal.map.sorted.SharedSortedMapImpl;
-import javolution.util.internal.map.sorted.UnmodifiableSortedMapImpl;
-import javolution.util.service.SortedMapService;
+import static javolution.lang.Realtime.Limit.LOG_N;
 
 /**
  * <p> A high-performance sorted map with {@link Realtime real-time} behavior.</p>
@@ -70,16 +68,6 @@ public class FastSortedMap<K, V> extends FastMap<K, V> implements
     ////////////////////////////////////////////////////////////////////////////
     // Views.
     //
-
-    @Override
-    public FastSortedMap<K, V> atomic() {
-        return new FastSortedMap<K, V>(new AtomicSortedMapImpl<K, V>(service()));
-    }
-
-    @Override
-    public FastSortedMap<K, V> shared() {
-        return new FastSortedMap<K, V>(new SharedSortedMapImpl<K, V>(service()));
-    }
 
     @Override
     public FastSortedMap<K, V> unmodifiable() {

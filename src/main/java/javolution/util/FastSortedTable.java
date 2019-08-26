@@ -11,9 +11,7 @@ package javolution.util;
 import javolution.lang.Realtime;
 import javolution.util.function.Equalities;
 import javolution.util.function.Equality;
-import javolution.util.internal.table.sorted.AtomicSortedTableImpl;
 import javolution.util.internal.table.sorted.FastSortedTableImpl;
-import javolution.util.internal.table.sorted.SharedSortedTableImpl;
 import javolution.util.internal.table.sorted.UnmodifiableSortedTableImpl;
 import javolution.util.service.SortedTableService;
 
@@ -59,16 +57,6 @@ public class FastSortedTable<E> extends FastTable<E> {
     ////////////////////////////////////////////////////////////////////////////
     // Views.
     //
-
-    @Override
-    public FastSortedTable<E> atomic() {
-        return new FastSortedTable<E>(new AtomicSortedTableImpl<E>(service()));
-    }
-
-    @Override
-    public FastSortedTable<E> shared() {
-        return new FastSortedTable<E>(new SharedSortedTableImpl<E>(service()));
-    }
 
     @Override
     public FastSortedTable<E> unmodifiable() {

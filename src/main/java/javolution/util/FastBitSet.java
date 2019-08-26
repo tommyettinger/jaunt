@@ -57,11 +57,6 @@ public class FastBitSet extends FastSet<Index> {
         throw new UnsupportedOperationException("NOT DONE YET"); // TODO
     }
 
-    @Override
-    public FastBitSet shared() {
-        throw new UnsupportedOperationException("NOT DONE YET"); // TODO
-    }
-
     ////////////////////////////////////////////////////////////////////////////
     // BitSet Operations.
     //

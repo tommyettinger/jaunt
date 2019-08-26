@@ -29,8 +29,5 @@ public interface SortedTableService<E> extends TableService<E> {
      * to be added or the index of the specified element if already present.
      */
     int positionOf(E element);
-    
-    @Override
-    SortedTableService<E> threadSafe(); 
 
 }

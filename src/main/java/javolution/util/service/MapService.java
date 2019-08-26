@@ -24,15 +24,8 @@ import java.util.concurrent.ConcurrentMap;
  * @see javolution.util.FastMap#FastMap()
  */
 public interface MapService<K, V> extends 
-        Map<K, V>, ConcurrentMap<K, V>, Splittable<MapService<K, V>>, Serializable, Cloneable {
-
-    /** 
-     * Returns a copy of this map; updates of the copy should not 
-     * impact the original.
-     */
-    MapService<K, V> clone() throws CloneNotSupportedException;
-
-
+        Map<K, V>, ConcurrentMap<K, V>, Splittable<MapService<K, V>>, Serializable {
+    
     /**
      * Returns a set view over the entries of this map. The set 
      * support adding/removing entries. Two entries are considered 
@@ -58,12 +51,6 @@ public interface MapService<K, V> extends
      */
     @Override
     SetService<K> keySet();
-
-    /** 
-     * Returns a thread-safe version of this service (used during 
-     * parallel updates).
-     */
-    MapService<K,V> threadSafe();
 
     /** 
     * Returns the value comparator used for value equality.

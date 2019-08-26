@@ -22,13 +22,7 @@ import java.util.Collection;
  * @version 6.0, July 21, 2013
  */
 public interface CollectionService<E> extends Collection<E>,
-        Splittable<CollectionService<E>>, Serializable, Cloneable {
-
-    /** 
-     * Returns a copy of this collection; updates of the copy should not 
-     * impact the original.
-     */
-    CollectionService<E> clone() throws CloneNotSupportedException;
+        Splittable<CollectionService<E>>, Serializable {
 
     /** 
      * Returns the comparator used for element equality or order if the 
@@ -36,11 +30,5 @@ public interface CollectionService<E> extends Collection<E>,
      */
     Equality<? super E> comparator();
 
-    
-    /** 
-     * Returns a thread-safe version of this service (used during 
-     * parallel updates).
-     */
-    CollectionService<E> threadSafe(); 
-    
+
 }

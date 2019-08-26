@@ -8,10 +8,9 @@
  */
 package javolution.util.internal.comparator;
 
-import java.io.Serializable;
-
-import javolution.lang.MathLib;
 import javolution.util.function.Equality;
+
+import java.io.Serializable;
 
 /**
  * The lexical comparator implementation (optimized for String).
@@ -67,7 +66,7 @@ public class LexicalComparatorImpl implements Equality<CharSequence>,
         if ((left instanceof String) && (right instanceof String)) // Optimization.
             return ((String) left).compareTo((String) right);
         int i = 0;
-        int n = MathLib.min(left.length(), right.length());
+        int n = Math.min(left.length(), right.length());
         while (n-- != 0) {
             char c1 = left.charAt(i);
             char c2 = right.charAt(i++);

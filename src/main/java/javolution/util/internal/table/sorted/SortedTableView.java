@@ -55,11 +55,6 @@ public abstract class SortedTableView<E> extends TableView<E> implements
     @Override
     public abstract int positionOf(E element);
 
-    @Override
-    public SortedTableService<E> threadSafe() {
-        return new SharedSortedTableImpl<E>(this);
-    }
-
     /** Returns the actual target */
     @Override
     protected SortedTableService<E> target() {

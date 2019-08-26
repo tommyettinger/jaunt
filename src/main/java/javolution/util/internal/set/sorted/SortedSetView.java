@@ -48,11 +48,6 @@ public abstract class SortedSetView<E> extends SetView<E> implements SortedSetSe
     }
 
     @Override
-    public SortedSetService<E> threadSafe() {
-        return new SharedSortedSetImpl<E>(this);
-    }
-
-    @Override
     protected SortedSetService<E> target() {
         return (SortedSetService<E>) super.target();
     }

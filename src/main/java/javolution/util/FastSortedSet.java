@@ -12,8 +12,6 @@ import javolution.lang.Realtime;
 import javolution.util.function.Equalities;
 import javolution.util.function.Equality;
 import javolution.util.internal.map.sorted.FastSortedMapImpl;
-import javolution.util.internal.set.sorted.AtomicSortedSetImpl;
-import javolution.util.internal.set.sorted.SharedSortedSetImpl;
 import javolution.util.internal.set.sorted.UnmodifiableSortedSetImpl;
 import javolution.util.service.SortedSetService;
 
@@ -56,16 +54,6 @@ public class FastSortedSet<E> extends FastSet<E> implements SortedSet<E> {
     ////////////////////////////////////////////////////////////////////////////
     // Views.
     //
-
-    @Override
-    public FastSortedSet<E> atomic() {
-        return new FastSortedSet<E>(new AtomicSortedSetImpl<E>(service()));
-    }
-
-    @Override
-    public FastSortedSet<E> shared() {
-        return new FastSortedSet<E>(new SharedSortedSetImpl<E>(service()));
-    }
 
     @Override
     public FastSortedSet<E> unmodifiable() {

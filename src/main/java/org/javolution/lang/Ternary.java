@@ -16,7 +16,7 @@ package org.javolution.lang;
  * <pre>{@code
  * Ternary<Double, Double, Double> xyz = ...;
  * Ternary<Temperature, Pressure, Humidity> atmosphericConditions() { ... }
- * Ternary<Integer, Integer, Integer> deinterleave3D(int unsigned) { ... } // MathLib
+ * Ternary<Integer, Integer, Integer> deinterleave3D(int unsigned) { ... }
  * }<pre></p>
  * 
  * @param <A> the first type.

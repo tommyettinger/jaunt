@@ -9,10 +9,8 @@
 package javolution.util.internal.map.sorted;
 
 import java.util.Comparator;
-import java.util.Map;
 
 import javolution.util.internal.map.MapView;
-import javolution.util.internal.set.sorted.SharedSortedSetImpl;
 import javolution.util.internal.set.sorted.SubSortedSetImpl;
 import javolution.util.service.SortedMapService;
 import javolution.util.service.SortedSetService;
@@ -56,12 +54,8 @@ public abstract class SortedMapView<K,V> extends MapView<K,V> implements SortedM
         @Override
         public SortedSetService<Entry<K, V>> tailSet(Entry<K, V> fromElement) {
             return new SubSortedSetImpl<Entry<K, V>>(this, fromElement, null);
-        }     
-        
-        @Override
-        public SortedSetService<Entry<K, V>> threadSafe() {
-            return new SharedSortedSetImpl<Entry<K, V>>(this);
-        }    
+        }
+
     }
   
     /** Entry Key View */
@@ -92,11 +86,7 @@ public abstract class SortedMapView<K,V> extends MapView<K,V> implements SortedM
         public SortedSetService<K> tailSet(K fromElement) {
             return new SubSortedSetImpl<K>(this, fromElement, null);
         }
-        
-        @Override
-        public SortedSetService<K> threadSafe() {
-            return new SharedSortedSetImpl<K>(this);
-        }    
+
     }
     
     private static final long serialVersionUID = 0x600L; // Version.
@@ -142,11 +132,6 @@ public abstract class SortedMapView<K,V> extends MapView<K,V> implements SortedM
     @Override
     public SortedMapService<K, V> tailMap(K fromKey) {
         return new SubSortedMapImpl<K,V>(this, fromKey, lastKey());
-    }
-
-    @Override
-    public SortedMapService<K,V> threadSafe() {
-        return new SharedSortedMapImpl<K,V>(this);
     }
 
     /** Returns the actual target */

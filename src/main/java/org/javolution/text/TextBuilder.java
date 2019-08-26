@@ -562,8 +562,8 @@ public class TextBuilder implements Appendable, CharSequence, Serializable {
      * library formatting).
      * 
      * @param  d the <code>double</code> to format.
-     * @return {@code append(d, -1, (MathLib.abs(d) >= 1E7) ||
-     *        (MathLib.abs(d) < 0.001), false)}
+     * @return {@code append(d, -1, (Math.abs(d) >= 1E7) ||
+     *        (Math.abs(d) < 0.001), false)}
      */
     public final TextBuilder append(double d) {
         return append(d, -1, (MathLib.abs(d) >= 1E7)

@@ -8,8 +8,6 @@
  */
 package javolution.util.internal.table;
 
-import javolution.lang.MathLib;
-
 /**
  * A fractal-based table with fast insertion/deletion capabilities regardless 
  * of the collection size. It is based on a fractal structure with self-similar
@@ -145,7 +143,7 @@ final class FractalTableImpl {
 
     // Copy to the specified table. 
     private void copyTo(FractalTableImpl that) {
-        int n = MathLib.min(this.data.length, that.data.length);
+        int n = Math.min(this.data.length, that.data.length);
         offset &= (data.length << shift) - 1; // Makes it positive.
         int o = offset >> shift;
         if ((o + n) > data.length) { // Wrapping.

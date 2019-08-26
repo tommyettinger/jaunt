@@ -17,8 +17,5 @@ import java.util.Set;
  * @version 6.0, July 21, 2013
  */
 public interface SetService<E> extends CollectionService<E>, Set<E> {
-  
-    @Override
-    SetService<E> threadSafe(); 
 
 }

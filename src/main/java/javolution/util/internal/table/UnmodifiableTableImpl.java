@@ -58,11 +58,6 @@ public class UnmodifiableTableImpl<E> extends TableView<E> {
     }
 
     @Override
-    public TableService<E> threadSafe() {
-        return this;
-    }
-
-    @Override
     public E get(int index) {
         return target().get(index);
     }

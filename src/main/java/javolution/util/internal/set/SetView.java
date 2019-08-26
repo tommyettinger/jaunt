@@ -35,11 +35,6 @@ public abstract class SetView<E> extends CollectionView<E> implements SetService
     @Override
     public abstract boolean remove(Object o);
 
-    @Override
-    public SetService<E> threadSafe() {
-        return new SharedSetImpl<E>(this);
-    }
-
     /** Returns the actual target */
     @Override
     protected SetService<E> target() {

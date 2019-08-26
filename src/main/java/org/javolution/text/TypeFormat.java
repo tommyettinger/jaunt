@@ -8,10 +8,10 @@
  */
 package org.javolution.text;
 
-import java.io.IOException;
-
 import org.javolution.annotations.Realtime;
 import org.javolution.lang.MathLib;
+
+import java.io.IOException;
 
 /**
  * <p> Utility class to parse {@link CharSequence} into primitive types and 
@@ -713,7 +713,7 @@ public final class TypeFormat {
      *
      * @param  f the <code>float</code> value.
      * @param  a the <code>Appendable</code> to append.
-     * @return {@code TypeFormat.format(f, 10, (MathLib.abs(f) >= 1E7) || (MathLib.abs(f) < 0.001), false, a)}
+     * @return {@code TypeFormat.format(f, 10, (Math.abs(f) >= 1E7) || (Math.abs(f) < 0.001), false, a)}
      * @throws IOException if an I/O exception occurs.
      * @throws IllegalArgumentException if a null Appendable is passed in
      */
@@ -729,7 +729,7 @@ public final class TypeFormat {
      *
      * @param  d the <code>double</code> value.
      * @param  a the <code>Appendable</code> to append.
-     * @return {@code TypeFormat.format(d, -1, (MathLib.abs(d) >= 1E7) || (MathLib.abs(d) < 0.001), false, a)}
+     * @return {@code TypeFormat.format(d, -1, (Math.abs(d) >= 1E7) || (Math.abs(d) < 0.001), false, a)}
      * @throws IOException if an I/O exception occurs.
      * @throws IllegalArgumentException if a null Appendable is passed in
      * @see    TextBuilder#append(double)

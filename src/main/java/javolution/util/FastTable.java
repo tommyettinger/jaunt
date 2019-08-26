@@ -23,19 +23,9 @@ import static javolution.lang.Realtime.Limit.*;
  * <p> A high-performance table (fractal-based) with {@link Realtime real-time}
  *      behavior.</p>
  *     
- * <p> The fractal-based implementation ensures that add/insertion/deletion operations 
- *     <b>worst</b> execution time is always in less than <i><b>O(log(size))</b></i>. 
- *     For comparison {@code ArrayList.add} is in <i><b>O(size)</b></i> due to resize. </p>
- *     
- *     <a href="doc-files/FastTable-WCET.png">
- *     <img src="doc-files/FastTable-WCET.png" alt="Worst Case Execution Time" height="210" width="306" />
- *     </a>
- *     
  * <p> Instances of this class can advantageously replace {@link java.util.ArrayList ArrayList},
  *     {@link java.util.LinkedList LinkedList} or {@link java.util.ArrayDeque ArrayDeque}
  *     in terms of adaptability, space or performance.
- *     Fast tables can be concurrently iterated / modified through their {@link #shared() shared}/{@link #atomic() atomic} 
- *     views. They inherit all the fast collection views and support the {@link #subTable subTable} view over a portion of the table.
  * [code]
  * FastTable<String> names = new FastTable<String>().addAll("John Deuff", "Otto Graf", "Sim Kamil");
  * names.sort(Equalities.LEXICAL_CASE_INSENSITIVE); // Sorts the names in place (different from sorted() which returns a sorted view).
@@ -107,20 +97,10 @@ public class FastTable<E> extends FastCollection<E> implements List<E>,
     //
 
     @Override
-    public FastTable<E> atomic() {
-        return new FastTable<E>(new AtomicTableImpl<E>(service));
-    }
-
-    @Override
     public FastTable<E> reversed() {
         return new FastTable<E>(new ReversedTableImpl<E>(service));
     }
-
-    @Override
-    public FastTable<E> shared() {
-        return new FastTable<E>(new SharedTableImpl<E>(service));
-    }
-
+    
     @Override
     public FastTable<E> unmodifiable() {
         return new FastTable<E>(new UnmodifiableTableImpl<E>(service));

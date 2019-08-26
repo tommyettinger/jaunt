@@ -29,17 +29,6 @@ public interface Splittable<T> {
     void perform(Consumer<T> action, T part);
 
     /** 
-     * Returns {@code n} distinct parts of this object. 
-     * This method may return an array of size less than {@code n}
-     * (e.g. an array of size one if this object cannot split).
-     *   
-     * @param n the number of parts.
-     * @return the distinct parts (or views) for this object.
-     * @throws IllegalArgumentException if {@code n <= 1}
-     */
-    T[] split(int n);
-
-    /** 
      * Executes an update action on the specified part of this object. 
      * Any change to the part is reflected in the whole (this object). 
      *       

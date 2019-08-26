@@ -17,7 +17,7 @@ package org.javolution.lang;
  * ```java
  * E reduce(Function<Binary<E, E>, E> operator) { ... }
  * Binary<Double, Unit<Mass>> getWeight() { ... }
- * Binary<Integer, Integer> deinterleave2D(int interleaved) { ... } // MathLib.
+ * Binary<Integer, Integer> deinterleave2D(int interleaved) { ... }
  * ```
  * 
  * @param <A> the first type.

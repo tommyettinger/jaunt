@@ -124,17 +124,6 @@ public abstract class MapView<K, V> implements MapService<K, V> {
             return MapView.this.size();
         }
 
-        @SuppressWarnings("unchecked")
-        @Override
-        public CollectionService<Entry<K, V>>[] split(int n) {
-            MapService<K, V>[] subMaps = MapView.this.split(n);
-            CollectionService<Entry<K, V>>[] result = new CollectionService[subMaps.length];
-            for (int i = 0; i < result.length; i++) {
-                result[i] = subMaps[i].entrySet();
-            }
-            return result;
-        }
-
         @Override
         public void update(
                 final Consumer<CollectionService<Entry<K, V>>> action,
@@ -224,20 +213,6 @@ public abstract class MapView<K, V> implements MapService<K, V> {
         Iterator<Entry<K, V>> it = iterator();
         while (it.hasNext()) {
             it.remove();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public MapView<K, V> clone() {
-        try {
-            MapView<K, V> copy = (MapView<K, V>) super.clone();
-            if (target != null) { // Not a root class.
-                copy.target = target.clone();
-            }
-            return copy;
-        } catch (CloneNotSupportedException e) {
-            throw new Error("Should not happen since target is cloneable");
         }
     }
 
@@ -336,25 +311,6 @@ public abstract class MapView<K, V> implements MapService<K, V> {
             it.next();
         }
         return count;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public MapService<K, V>[] split(int n) {
-        if (target == null) return new MapService[] { this }; // No split.
-        MapService<K, V>[] subTargets = target.split(n);
-        MapService<K, V>[] result = new MapService[subTargets.length];
-        for (int i = 0; i < subTargets.length; i++) {
-            MapView<K, V> copy = this.clone();
-            copy.target = subTargets[i];
-            result[i] = copy;
-        }
-        return result;
-    }
-
-    @Override
-    public MapService<K, V> threadSafe() {
-        return new SharedMapImpl<K, V>(this);
     }
 
     @Override

@@ -61,20 +61,6 @@ public abstract class CollectionView<E> extends FastCollection<E> implements Col
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public CollectionView<E> clone() {
-        try {
-            CollectionView<E> copy = (CollectionView<E>) super.clone();
-            if (target != null) { // Not a root class.
-                copy.target = target.clone();
-            }
-            return copy;
-        } catch (CloneNotSupportedException e) {
-            throw new Error("Should not happen since target is cloneable");
-        }
-    }
-
     @Override
     public abstract Equality<? super E> comparator();
 
@@ -217,26 +203,6 @@ public abstract class CollectionView<E> extends FastCollection<E> implements Col
             it.next();
         }
         return count;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public CollectionService<E>[] split(int n) {
-        if (target == null) return new CollectionService[] { this }; // No split.
-        CollectionService<E>[] subTargets = target.split(n);
-        CollectionService<E>[] result = new CollectionService[subTargets.length];
-        for (int i = 0; i < subTargets.length; i++) {
-            CollectionView<E> copy = this.clone();
-            copy.target = subTargets[i];
-            result[i] = copy;
-        }
-        return result;
-    }
-
-    @Override
-    public CollectionService<E> threadSafe() {
-        // We use shared collection as default (they can split).
-        return new SharedCollectionImpl<E>(this); 
     }
 
     @Override

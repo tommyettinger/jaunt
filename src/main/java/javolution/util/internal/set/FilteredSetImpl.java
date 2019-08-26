@@ -24,9 +24,4 @@ public class FilteredSetImpl<E> extends FilteredCollectionImpl<E> implements
         super(target, filter);
     }
 
-    @Override
-    public SetService<E> threadSafe() {
-        return new SharedSetImpl<E>(this);
-    }
-
 }

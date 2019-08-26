@@ -13,13 +13,14 @@ import javolution.lang.Realtime;
 import javolution.util.function.Consumer;
 import javolution.util.function.Equalities;
 import javolution.util.function.Equality;
-import javolution.util.internal.map.*;
+import javolution.util.internal.map.FastMapImpl;
+import javolution.util.internal.map.SequentialMapImpl;
+import javolution.util.internal.map.UnmodifiableMapImpl;
 import javolution.util.service.CollectionService;
 import javolution.util.service.MapService;
 import org.javolution.text.TextBuilder;
 
 import java.io.Serializable;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
@@ -31,9 +32,6 @@ import static javolution.lang.Realtime.Limit.LINEAR;
  * <p> A high-performance hash map with {@link Realtime real-time} behavior. 
  *     Related to {@link FastCollection}, fast map supports various views.
  * <ul>
- *    <li>{@link #atomic} - Thread-safe view for which all reads are mutex-free 
- *    and map updates (e.g. {@link #putAll putAll}) are atomic.</li>
- *    <li>{@link #shared} - View allowing concurrent modifications.</li>
  *    <li>{@link #sequential} - View disallowing parallel processing.</li>
  *    <li>{@link #unmodifiable} - View which does not allow any modifications.</li>
  *    <li>{@link #entrySet} - {@link FastSet} view over the map entries allowing 
@@ -50,10 +48,8 @@ import static javolution.lang.Realtime.Limit.LINEAR;
  * <p> Fast maps can advantageously replace any of the standard <code>java.util</code> maps.</p> 
  * <p>[code]
  *  FastMap<Foo, Bar> hashMap = new FastMap<Foo, Bar>(); 
- *  FastMap<Foo, Bar> concurrentHashMap = new FastMap<Foo, Bar>().shared(); // FastMap implements ConcurrentMap interface.
  *  FastMap<Foo, Bar> linkedHashMap = new FastMap<Foo, Bar>(); // Deterministic iteration order (insertion order).
  *  FastMap<Foo, Bar> treeMap = new FastSortedMap<Foo, Bar>(); 
- *  FastMap<Foo, Bar> concurrentSkipListMap = new FastSortedMap<Foo, Bar>().shared();
  *  FastMap<Foo, Bar> identityHashMap = new FastMap<Foo, Bar>(Equalities.IDENTITY);
  *  [/code]</p>
  *  <p> and adds more ... 
@@ -61,7 +57,6 @@ import static javolution.lang.Realtime.Limit.LINEAR;
  *  FastMap<Foo, Bar> atomicMap = new FastMap<Foo, Bar>().atomic(); // Mutex-free access,  all updates (e.g. putAll) atomics (unlike ConcurrentHashMap).
  *  FastMap<Foo, Bar> atomicTree = new FastSortedMap<Foo, Bar>().atomic(); // Mutex-free access,  all updates (e.g. putAll) atomics.
  *  FastMap<Foo, Bar> parallelMap = new FastMap<Foo, Bar>().parallel(); // Map actions (perform/update) performed concurrently.
- *  FastMap<Foo, Bar> linkedConcurrentHashMap = new FastMap<Foo, Bar>().shared(); // No equivalent in java.util !
  *  FastMap<String, Bar> lexicalHashMap = new FastMap<String, Bar>(Equalities.LEXICAL);  // Allows for value retrieval using any CharSequence key.
  *  FastMap<String, Bar> fastStringHashMap = new FastMap<String, Bar>(Equalities.LEXICAL_FAST);  // Same with faster hashcode calculations.
  *  ...
@@ -132,32 +127,6 @@ public class FastMap<K, V> implements Map<K, V>, ConcurrentMap<K, V>,
     ////////////////////////////////////////////////////////////////////////////
     // Views.
     //
-
-    /**
-     * Returns an atomic view over this map. All operations that write 
-     * or access multiple elements in the map (such as putAll(), 
-     * keySet().retainAll(), ...) are atomic. 
-     * Iterators on atomic collections are <b>thread-safe</b> 
-     * (no {@link ConcurrentModificationException} possible).
-     */
-    
-    public FastMap<K, V> atomic() {
-        return new FastMap<K, V>(new AtomicMapImpl<K, V>(service));
-    }
-
-    /**
-     * Returns a thread-safe view over this map. The shared view
-     * allows for concurrent read as long as there is no writer. 
-     * The default implementation is based on <a href=
-     * "http://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock">
-     * readers-writers locks</a> giving priority to writers. 
-     * Iterators on shared collections are <b>thread-safe</b> 
-     * (no {@link ConcurrentModificationException} possible).
-     */
-    
-    public FastMap<K, V> shared() {
-        return new FastMap<K, V>(new SharedMapImpl<K, V>(service));
-    }
 
     /** 
      * Returns a sequential view of this collection. Using this view, 
@@ -239,8 +208,6 @@ public class FastMap<K, V> implements Map<K, V>, ConcurrentMap<K, V>,
 
     /** 
      * Executes the specified update action on this map. 
-     * For {@link #atomic() atomic} maps the update is atomic (either concurrent 
-     * readers see the full result of the action or nothing).
      *    
      * @param action the update action.
      * @throws ClassCastException if the action type is not compatible with 

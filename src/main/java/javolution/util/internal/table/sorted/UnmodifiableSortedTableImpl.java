@@ -33,11 +33,6 @@ public class UnmodifiableSortedTableImpl<E> extends UnmodifiableTableImpl<E>
         return target().positionOf(element);
     }
 
-    @Override
-    public SortedTableService<E> threadSafe() {
-        return this;
-    }
-
     /** Returns the actual target */
     @Override
     protected SortedTableService<E> target() {

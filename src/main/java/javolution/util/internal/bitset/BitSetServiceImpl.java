@@ -8,7 +8,6 @@
  */
 package javolution.util.internal.bitset;
 
-import javolution.lang.MathLib;
 import javolution.util.Index;
 import javolution.util.function.Equalities;
 import javolution.util.function.Equality;
@@ -42,7 +41,7 @@ public class BitSetServiceImpl extends SetView<Index> implements BitSetService, 
     @Override
     public void and(BitSetService that) {
         long[] thatBits = that.toLongArray();
-        int n = MathLib.min(this.bits.length, thatBits.length);
+        int n = Math.min(this.bits.length, thatBits.length);
         for (int i = 0; i < n; i++) {
             this.bits[i] &= thatBits[i];
         }
@@ -55,7 +54,7 @@ public class BitSetServiceImpl extends SetView<Index> implements BitSetService, 
     @Override
     public void andNot(BitSetService that) {
         long[] thatBits = that.toLongArray();
-        int n = MathLib.min(this.bits.length, thatBits.length);
+        int n = Math.min(this.bits.length, thatBits.length);
         for (int i = 0; i < n; i++) {
             this.bits[i] &= ~thatBits[i];
         }
@@ -66,7 +65,7 @@ public class BitSetServiceImpl extends SetView<Index> implements BitSetService, 
     public int cardinality() {
         int sum = 0;
         for (int i = 0; i < bits.length; i++) {
-            sum += MathLib.bitCount(bits[i]);
+            sum += Long.bitCount(bits[i]);
         }
         return sum;
     }
@@ -155,7 +154,7 @@ public class BitSetServiceImpl extends SetView<Index> implements BitSetService, 
         if (fromIndex < 0 || fromIndex > toIndex)
             throw new IndexOutOfBoundsException();
         BitSetServiceImpl bitSet = new BitSetServiceImpl();
-        int length = MathLib.min(bits.length, (toIndex >>> 6) + 1);
+        int length = Math.min(bits.length, (toIndex >>> 6) + 1);
         bitSet.bits = new long[length];
         System.arraycopy(bits, 0, bitSet.bits, 0, length);
         bitSet.clear(0, fromIndex);
@@ -183,7 +182,7 @@ public class BitSetServiceImpl extends SetView<Index> implements BitSetService, 
     @Override
     public boolean intersects(BitSetService that) {
         long[] thatBits = that.toLongArray();
-        int i = MathLib.min(this.bits.length, thatBits.length);
+        int i = Math.min(this.bits.length, thatBits.length);
         while (--i >= 0) {
             if ((bits[i] & thatBits[i]) != 0) return true; 
         }
@@ -198,7 +197,7 @@ public class BitSetServiceImpl extends SetView<Index> implements BitSetService, 
     @Override
     public int length() {
         if (bits.length == 0) return 0;
-        return (bits.length << 6) - MathLib.numberOfLeadingZeros(bits[bits.length -1]);
+        return (bits.length << 6) - Long.numberOfLeadingZeros(bits[bits.length -1]);
     }
 
     @Override
