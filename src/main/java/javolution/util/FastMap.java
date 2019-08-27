@@ -22,7 +22,6 @@ import org.javolution.text.TextBuilder;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 import static javolution.lang.Realtime.Limit.CONSTANT;
 import static javolution.lang.Realtime.Limit.LINEAR;
@@ -52,9 +51,6 @@ import static javolution.lang.Realtime.Limit.LINEAR;
  *  [/code]</p>
  *  <p> and adds more ... 
  * <p>[code]
- *  FastMap<Foo, Bar> atomicMap = new FastMap<Foo, Bar>().atomic(); // Mutex-free access,  all updates (e.g. putAll) atomics (unlike ConcurrentHashMap).
- *  FastMap<Foo, Bar> atomicTree = new FastSortedMap<Foo, Bar>().atomic(); // Mutex-free access,  all updates (e.g. putAll) atomics.
- *  FastMap<Foo, Bar> parallelMap = new FastMap<Foo, Bar>().parallel(); // Map actions (perform/update) performed concurrently.
  *  FastMap<String, Bar> lexicalHashMap = new FastMap<String, Bar>(Equalities.LEXICAL);  // Allows for value retrieval using any CharSequence key.
  *  FastMap<String, Bar> fastStringHashMap = new FastMap<String, Bar>(Equalities.LEXICAL_FAST);  // Same with faster hashcode calculations.
  *  ...
@@ -73,15 +69,13 @@ import static javolution.lang.Realtime.Limit.LINEAR;
  * };
  * FastMap<Person, String> names = ...
  * names.values().update(removeNull); // Remove all entries with null values.
- * names.atomic().values().update(removeNull); // Same but performed atomically.
- * names.parallel().values().update(removeNull); // Same but performed in parallel.
  * [/code]</p> 
  *             
  * @author <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle </a>
  * @version 6.0, July 21, 2013
  */
 @Realtime
-public class FastMap<K, V> implements Map<K, V>, ConcurrentMap<K, V>,
+public class FastMap<K, V> implements Map<K, V>,
         Serializable {
 
     private static final long serialVersionUID = 0x600L; // Version.
@@ -278,7 +272,7 @@ public class FastMap<K, V> implements Map<K, V>, ConcurrentMap<K, V>,
     }
 
     ////////////////////////////////////////////////////////////////////////////
-    // ConcurrentMap Interface.
+    // Map Interface.
     //
 
     /** Associates the specified value with the specified key only if the 

@@ -44,16 +44,10 @@ import static javolution.lang.Realtime.Limit.*;
  *     // Immutability is guaranteed, no reference left on the collection source.
  * [/code]</p>
  * 
- * <p> Atomic collections use <a href="http://en.wikipedia.org/wiki/Copy-on-write">Copy-On-Write</a> 
- *     optimizations in order to provide mutex-free read access. Only writes operations are mutually 
- *     exclusive. Collections can be optimized to not require the full copy during write operations
- *     (e.g. immutable parts don't need to be copied). Still, when multiple updates are performed,
- *     it is beneficial to group them into one single {@link #update update} operation.
  * [code]
  * FastTable<String> tokens = ...
  * ...
- * // Replace null with "" in tokens. If tokens is atomic the update is atomic.
- * // If tokens is parallel, the update is also performed concurrently !
+ * // Replace null with "" in tokens.
  * tokens.update(new Consumer<List<String>>() {  
  *     public void accept(List<String> view) {
  *         for (int i=0, n = view.size(); i < n; i++)
@@ -81,7 +75,6 @@ import static javolution.lang.Realtime.Limit.*;
  * names.subTable(0, n).clear(); // Removes the n first names (see java.util.List.subList).
  * names.distinct().add("Guy Liguili"); // Adds "Guy Liguili" only if not already present.
  * names.filtered(isLong).clear(); // Removes all the persons with long names.
- * names.filtered(isLong).parallel().clear(); // Same as above but performed concurrently !
  * ...
  * Predicate<CharSequence> isLong = new Predicate<CharSequence>() { 
  *     public boolean test(CharSequence csq) {
@@ -336,9 +329,8 @@ public abstract class FastCollection<E> implements Collection<E>, Serializable {
     }
 
     /**
-     * Returns an iterator over this collection elements. For 
-     * shared/atomic collections the iterator is immune to 
-     * concurrent modifications. In other words the elements iterated over
+     * Returns an iterator over this collection elements. 
+     * In other words the elements iterated over
      * may or may not reflect the current state of the collection.
      */
     @Override

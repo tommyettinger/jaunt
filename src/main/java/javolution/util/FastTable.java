@@ -31,7 +31,6 @@ import static javolution.lang.Realtime.Limit.*;
  * names.sort(Equalities.LEXICAL_CASE_INSENSITIVE); // Sorts the names in place (different from sorted() which returns a sorted view).
  * names.subTable(0, names.size() / 2).clear(); // Removes the first half of the table (see java.util.List.subList specification).
  * names.filtered(str -> str.startsWith("A")).clear(); // Removes all the names starting with "A" (Java 8 notation).
- * names.filtered(str -> str.startsWith("A")).parallel().clear(); // Same as above but performed concurrently.
  * [/code]</p>
  *
  * <p> As for any {@link FastCollection fast collection}, iterations can be 

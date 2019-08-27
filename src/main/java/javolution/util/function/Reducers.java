@@ -14,8 +14,6 @@ import javolution.util.FastCollection;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static javolution.lang.Realtime.Limit.LINEAR;
 
@@ -82,7 +80,7 @@ public class Reducers {
 
     private static class MaxReducer<E> implements Reducer<E> {
         private final Comparator<? super E> cmp;
-        private final AtomicReference<E> max = new AtomicReference<E>(null);
+        private E max = null;
 
         public MaxReducer(Comparator<? super E> cmp) {
             this.cmp = cmp;
@@ -90,20 +88,16 @@ public class Reducers {
 
         @Override
         public void accept(Collection<E> param) {
-            Iterator<E> it = param.iterator();
-            while (it.hasNext()) {
-                E e = it.next();
-                E read = max.get();
-                while ((read == null) || (cmp.compare(e, read) > 0)) {
-                    if (max.compareAndSet(read, e)) break;
-                    read = max.get();
+            for (E e : param) {
+                while ((max == null) || (cmp.compare(e, max) > 0)) {
+                    max = e;
                 }
             }
         }
 
         @Override
         public E get() {
-            return max.get();
+            return max;
         }
     }
 
@@ -119,7 +113,7 @@ public class Reducers {
 
     private static class MinReducer<E> implements Reducer<E> {
         private final Comparator<? super E> cmp;
-        private final AtomicReference<E> min = new AtomicReference<E>(null);
+        private E min = null;
 
         public MinReducer(Comparator<? super E> cmp) {
             this.cmp = cmp;
@@ -127,20 +121,16 @@ public class Reducers {
 
         @Override
         public void accept(Collection<E> param) {
-            Iterator<E> it = param.iterator();
-            while (it.hasNext()) {
-                E e = it.next();
-                E read = min.get();
-                while ((read == null) || (cmp.compare(e, read) < 0)) {
-                    if (min.compareAndSet(read, e)) break;
-                    read = min.get();
+            for (E e : param) {
+                while ((min == null) || (cmp.compare(e, min) < 0)) {
+                    min = e;
                 }
             }
         }
 
         @Override
         public E get() {
-            return min.get();
+            return min;
         }
     }
 
@@ -211,19 +201,18 @@ public class Reducers {
     }
 
     private static class SumReducer implements Reducer<Integer> {
-        private final AtomicInteger sum = new AtomicInteger(0);
+        private int sum = 0;
 
         @Override
         public void accept(Collection<Integer> param) {
-            Iterator<Integer> it = param.iterator();
-            while (it.hasNext()) {
-                sum.getAndAdd(it.next().intValue());
+            for (Integer integer : param) {
+                sum += integer;
             }
         }
 
         @Override
         public Integer get() {
-            return sum.get();
+            return sum;
         }
     }
 
