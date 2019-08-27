@@ -14,7 +14,6 @@ import javolution.util.function.Consumer;
 import javolution.util.function.Equalities;
 import javolution.util.function.Equality;
 import javolution.util.internal.map.FastMapImpl;
-import javolution.util.internal.map.SequentialMapImpl;
 import javolution.util.internal.map.UnmodifiableMapImpl;
 import javolution.util.service.CollectionService;
 import javolution.util.service.MapService;
@@ -32,7 +31,6 @@ import static javolution.lang.Realtime.Limit.LINEAR;
  * <p> A high-performance hash map with {@link Realtime real-time} behavior. 
  *     Related to {@link FastCollection}, fast map supports various views.
  * <ul>
- *    <li>{@link #sequential} - View disallowing parallel processing.</li>
  *    <li>{@link #unmodifiable} - View which does not allow any modifications.</li>
  *    <li>{@link #entrySet} - {@link FastSet} view over the map entries allowing 
  *                            entries to be added/removed.</li>
@@ -127,14 +125,6 @@ public class FastMap<K, V> implements Map<K, V>, ConcurrentMap<K, V>,
     ////////////////////////////////////////////////////////////////////////////
     // Views.
     //
-
-    /** 
-     * Returns a sequential view of this collection. Using this view, 
-     * all closure-based iterations are performed sequentially.
-     */
-    public FastMap<K, V> sequential() {
-        return new FastMap<K, V>(new SequentialMapImpl<K, V>(service));
-    }
 
     /**
      * Returns an unmodifiable view over this map. Any attempt to 

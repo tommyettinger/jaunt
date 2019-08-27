@@ -181,6 +181,11 @@ public class FastMapImpl<K, V> extends MapView<K, V> {
     }
 
     @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
     public Equality<? super V> valueComparator() {
         return valueComparator;
     }

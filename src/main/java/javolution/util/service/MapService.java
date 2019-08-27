@@ -14,7 +14,6 @@ import javolution.util.function.Splittable;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * The set of related map functionalities required to implement fast maps.
@@ -24,11 +23,11 @@ import java.util.concurrent.ConcurrentMap;
  * @see javolution.util.FastMap#FastMap()
  */
 public interface MapService<K, V> extends 
-        Map<K, V>, ConcurrentMap<K, V>, Splittable<MapService<K, V>>, Serializable {
+        Map<K, V>, Splittable<MapService<K, V>>, Serializable {
     
     /**
      * Returns a set view over the entries of this map. The set 
-     * support adding/removing entries. Two entries are considered 
+     * supports adding/removing entries. Two entries are considered 
      * equals if they have the same key regardless of their values.
      */
     @Override
@@ -46,8 +45,8 @@ public interface MapService<K, V> extends
     Equality<? super K> keyComparator();
 
     /**
-     * Returns a set view over the key of this map, the set support 
-     * adding new key for which the value is automatically {@code null}.
+     * Returns a set view over the key of this map, the set supports
+     * adding new keys, for which the value is automatically {@code null}.
      */
     @Override
     SetService<K> keySet();

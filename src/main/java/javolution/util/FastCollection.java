@@ -25,7 +25,6 @@ import static javolution.lang.Realtime.Limit.*;
 /**
  * <p> A closure-based collection supporting numerous views which can be chained.
  * <ul>
- *    <li>{@link #sequential} - View disallowing parallel processing.</li>
  *    <li>{@link #unmodifiable} - View which does not allow any modification.</li>
  *    <li>{@link #filtered filtered(filter)} - View exposing only the elements matching the specified filter.</li>
  *    <li>{@link #mapped mapped(function)} - View exposing elements through the specified mapping function.</li>
@@ -133,14 +132,6 @@ public abstract class FastCollection<E> implements Collection<E>, Serializable {
     ////////////////////////////////////////////////////////////////////////////
     // Views.
     //
-
-    /** 
-     * Returns a sequential view of this collection. Using this view, 
-     * all closure-based iterations are performed sequentially.
-     */
-    public FastCollection<E> sequential() {
-        return new SequentialCollectionImpl<E>(service());
-    }
 
     /**
      * Returns an unmodifiable view over this collection. Any attempt to 

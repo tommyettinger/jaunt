@@ -41,5 +41,8 @@ public abstract class SetView<E> extends CollectionView<E> implements SetService
         return (SetService<E>) super.target();
     }
 
-    
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
 }
